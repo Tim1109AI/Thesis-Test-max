@@ -64,3 +64,4 @@ DQ__T2__smax: 126 runs to do (0 done) -> /home/user/Thesis-Test-max/discrete_des
   [63/126] T2 smax_K8_S8 drop 901 R_th 2: rate 90.01, 9 streams BS-specific  (32 CPU-s, 4336 s elapsed)
   [64/126] T2 smax_K12_S10 drop 902 R_th 0: rate 116.96, 11 streams BS-specific  (55 CPU-s, 4435 s elapsed)
   [65/126] T2 smax_K12_S10 drop 902 R_th 1: rate 112.37, 11 streams BS-specific  (67 CPU-s, 4508 s elapsed)
+  [66/126] T2 smax_K12_S10 drop 902 R_th 2: rate 97.50, 11 streams BS-specific  (58 CPU-s, 4586 s elapsed)
