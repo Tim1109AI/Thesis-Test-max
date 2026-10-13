@@ -29,6 +29,7 @@ large area means the BSs around it. No parameter, no test, no optimization; abou
 | R3 (Q = 50, bench) | super-common 14.1 %, group-common 10.1 % of the sum rate (15/15 runs meet the QoS) |
 | R4 (Q = 50, smax) | rises with S_max and flattens: K = 8: 73.4 → 96.5 → 97.4 → 97.5 → 99.4 → 99.4 → 99.4; K = 12: 68.6 → 94.4 → 111.9 → 115.1 → 113.7 → 116.9 → 116.5; K = 16: 61.0 → 72.8 → 102.7 → 102.7 → 109.8 → 107.6 → 108.9 (S_max = 4 … 16); largest step down −2.2 ± 1.9 |
 | BS-specific streams | in 97/144 (T2) and 114/144 (E3) screen runs and in 9/15 benchmark runs; private streams in both scenarios, group-common streams in T2 (setting e) |
+| For reference: vs J (Q = 50, confirm) | T2 −7.0, −6.7, −3.6, −0.8, +0.5, +1.0 (R_th = 0 … 2.5); E3 +2.4, +4.7, +10.0, +15.9, +26.9, +33.8; QoS met in E3: DQ 108/108, J 100/108. JH − J1 in the same tier: T2 +0.15, −0.41, +0.07, −0.12, +0.84, +1.72; E3 +0.50, +1.05, +1.87, +0.47, −0.15, +0.96 |
 
 **Verdict, requirement by requirement.**
 
@@ -39,7 +40,8 @@ large area means the BSs around it. No parameter, no test, no optimization; abou
   scenario-settings of the grid the core private streams fill the fronthaul, and DQ and DQ_1 are the same design;
   where they differ, the 1-layer counterpart spreads the private streams of the non-core users over the BSs and
   carries a moderate QoS load almost as well as the group-common streams; and single paired runs at Q = 50 differ by
-  ±5–15 bit/s/Hz. CALIBRATION_SENTENCE
+  ±5–15 bit/s/Hz. The current design is no clearer in the same tier: JH − J1 at Q = 50 is within two standard
+  errors of zero at every R_th in both scenarios (§3.1).
 * **R2 — met.** +9.8 ± 2.6 over sparse beamforming over the 15 benchmark runs (+13.2 / +11.1 / +5.1 at M = 100 /
   300 / 500) and +28.1 ± 2.2 over stream clustering on DQ's streams; DQ is also 1.5 above the current framework J.
 * **R3 — met.** Super-common 14.1 % and group-common 10.1 % of the sum rate at K = 16, R_th = 2.
@@ -297,142 +299,145 @@ on common runs; ± is the standard error of the paired mean.
 
 ### 3.1 R1 at Q = 50 (`--tier confirm`, both scenarios, `--by-setting`)
 
-`python3 tools/report.py DQ --by-setting` (216 runs per variant, drops 901–903; JH and J1 at Q = 50: see §6):
+`python3 tools/report.py DQ --by-setting` (216 runs per variant, drops 901–903; J, JH and J1 at Q = 50 on the same
+runs, for reference):
 
 ```
-===== scenario T2, Q = 50: 108 common runs (DQ: 108, DQ_1: 108)
+===== scenario T2, Q = 50: 108 common runs (DQ: 108, DQ_1: 108, JH: 108, J1: 108)
 -- T2, all settings
-   R_th    n        DQ      DQ_1           DQ-DQ_1   QoS met DQ/DQ_1
-      0   18    117.65    117.44    +0.21± 0.40      18/18
-    0.5   18    114.73    116.01    -1.28± 0.80      18/18
-      1   18    109.96    109.66    +0.30± 0.95      18/18
-    1.5   18    102.79    102.26    +0.54± 1.10      18/18
-      2   18     94.05     92.47    +1.58± 1.92      18/18
-    2.5   18     77.86     75.73    +2.13± 1.09      15/15
-    all  108    102.84    102.26    +0.58± 0.47      105/105
+   R_th    n        DQ      DQ_1         J        JH        J1           DQ-DQ_1              DQ-J   QoS met DQ/DQ_1/J/JH/J1
+      0   18    117.65    117.44    124.68    123.91    123.76    +0.21± 0.40       -7.03± 3.56      18/18/18/18/18
+    0.5   18    114.73    116.01    121.41    120.44    120.85    -1.28± 0.80       -6.67± 3.08      18/18/18/18/18
+      1   18    109.96    109.66    113.54    113.02    112.95    +0.30± 0.95       -3.58± 2.30      18/18/18/18/18
+    1.5   18    102.79    102.26    103.61    103.47    103.59    +0.54± 1.10       -0.82± 2.00      18/18/18/18/18
+      2   18     94.05     92.47     93.54     94.06     93.22    +1.58± 1.92       +0.51± 2.29      18/18/18/18/18
+    2.5   18     77.86     75.73     76.86     77.34     75.61    +2.13± 1.09       +1.01± 1.95      15/15/15/15/15
+    all  108    102.84    102.26    105.61    105.37    105.00    +0.58± 0.47       -2.76± 1.08      105/105/105/105/105
 -- T2, setting a
-   R_th    n        DQ      DQ_1           DQ-DQ_1   QoS met DQ/DQ_1
-      0    3    105.77    105.98    -0.21± 0.61      3/3
-    0.5    3    102.38    103.81    -1.43± 2.21      3/3
-      1    3    102.12    102.27    -0.15± 3.91      3/3
-    1.5    3    100.98    104.20    -3.21± 2.73      3/3
-      2    3    105.15    103.07    +2.08± 3.81      3/3
-    2.5    3    107.02    106.79    +0.24± 3.78      3/3
-    all   18    103.91    104.35    -0.45± 1.13      18/18
+   R_th    n        DQ      DQ_1         J        JH        J1           DQ-DQ_1              DQ-J   QoS met DQ/DQ_1/J/JH/J1
+      0    3    105.77    105.98    110.24    106.84    106.33    -0.21± 0.61       -4.47± 2.92      3/3/3/3/3
+    0.5    3    102.38    103.81    111.23    107.15    110.08    -1.43± 2.21       -8.85± 0.63      3/3/3/3/3
+      1    3    102.12    102.27    111.42    107.38    109.07    -0.15± 3.91       -9.30± 3.66      3/3/3/3/3
+    1.5    3    100.98    104.20    108.84    105.70    108.44    -3.21± 2.73       -7.85± 1.93      3/3/3/3/3
+      2    3    105.15    103.07    110.08    108.48    108.73    +2.08± 3.81       -4.93± 4.63      3/3/3/3/3
+    2.5    3    107.02    106.79    106.47    109.33    104.77    +0.24± 3.78       +0.56± 7.11      3/3/3/3/3
+    all   18    103.91    104.35    109.71    107.48    107.90    -0.45± 1.13       -5.81± 1.61      18/18/18/18/18
 -- T2, setting b
-   R_th    n        DQ      DQ_1           DQ-DQ_1   QoS met DQ/DQ_1
-      0    3     75.96     75.96    +0.00± 0.00      3/3
-    0.5    3     74.74     74.74    +0.00± 0.00      3/3
-      1    3     68.44     68.44    +0.00± 0.00      3/3
-    1.5    3     64.59     64.59    +0.00± 0.00      3/3
-      2    3     65.13     65.13    +0.00± 0.00      3/3
-    2.5    3     54.29     54.29    +0.00± 0.00      3/3
-    all   18     67.19     67.19    +0.00± 0.00      18/18
+   R_th    n        DQ      DQ_1         J        JH        J1           DQ-DQ_1              DQ-J   QoS met DQ/DQ_1/J/JH/J1
+      0    3     75.96     75.96     84.75     84.75     84.75    +0.00± 0.00       -8.78± 1.35      3/3/3/3/3
+    0.5    3     74.74     74.74     78.06     78.06     78.06    +0.00± 0.00       -3.32± 3.06      3/3/3/3/3
+      1    3     68.44     68.44     71.01     71.01     71.01    +0.00± 0.00       -2.58± 0.96      3/3/3/3/3
+    1.5    3     64.59     64.59     62.39     62.39     62.39    +0.00± 0.00       +2.20± 3.08      3/3/3/3/3
+      2    3     65.13     65.13     53.41     53.41     53.41    +0.00± 0.00      +11.72± 0.08      3/3/3/3/3
+    2.5    3     54.29     54.29     42.77     42.77     42.77    +0.00± 0.00      +11.52± 1.96      3/3/3/3/3
+    all   18     67.19     67.19     65.40     65.40     65.40    +0.00± 0.00       +1.79± 1.98      18/18/18/18/18
 -- T2, setting c
-   R_th    n        DQ      DQ_1           DQ-DQ_1   QoS met DQ/DQ_1
-      0    3     82.47     82.47    +0.00± 0.00      3/3
-    0.5    3     88.96     88.96    +0.00± 0.00      3/3
-      1    3     82.27     82.27    +0.00± 0.00      3/3
-    1.5    3     74.82     74.82    +0.00± 0.00      3/3
-      2    3     55.57     55.57    +0.00± 0.00      3/3
-    2.5    3      0.00      0.00    +0.00± 0.00      0/0
-    all   18     64.01     64.01    +0.00± 0.00      15/15
+   R_th    n        DQ      DQ_1         J        JH        J1           DQ-DQ_1              DQ-J   QoS met DQ/DQ_1/J/JH/J1
+      0    3     82.47     82.47    117.51    117.51    117.51    +0.00± 0.00      -35.04± 2.12      3/3/3/3/3
+    0.5    3     88.96     88.96    111.22    111.22    111.22    +0.00± 0.00      -22.25±10.15      3/3/3/3/3
+      1    3     82.27     82.27     95.29     95.29     95.29    +0.00± 0.00      -13.02± 1.31      3/3/3/3/3
+    1.5    3     74.82     74.82     74.50     74.50     74.50    +0.00± 0.00       +0.32± 5.48      3/3/3/3/3
+      2    3     55.57     55.57     49.93     49.93     49.93    +0.00± 0.00       +5.64± 2.52      3/3/3/3/3
+    2.5    3      0.00      0.00      0.00      0.00      0.00    +0.00± 0.00       +0.00± 0.00      0/0/0/0/0
+    all   18     64.01     64.01     74.74     74.74     74.74    +0.00± 0.00      -10.73± 3.87      15/15/15/15/15
 -- T2, setting d
-   R_th    n        DQ      DQ_1           DQ-DQ_1   QoS met DQ/DQ_1
-      0    3    122.61    122.61    +0.00± 0.00      3/3
-    0.5    3    112.05    112.05    +0.00± 0.00      3/3
-      1    3    110.72    110.72    +0.00± 0.00      3/3
-    1.5    3    106.25    106.25    +0.00± 0.00      3/3
-      2    3     95.56     95.56    +0.00± 0.00      3/3
-    2.5    3     83.77     83.77    +0.00± 0.00      3/3
-    all   18    105.16    105.16    +0.00± 0.00      18/18
+   R_th    n        DQ      DQ_1         J        JH        J1           DQ-DQ_1              DQ-J   QoS met DQ/DQ_1/J/JH/J1
+      0    3    122.61    122.61    129.06    129.06    129.06    +0.00± 0.00       -6.45± 3.38      3/3/3/3/3
+    0.5    3    112.05    112.05    125.63    125.63    125.63    +0.00± 0.00      -13.58± 7.20      3/3/3/3/3
+      1    3    110.72    110.72    117.95    117.95    117.95    +0.00± 0.00       -7.23± 4.97      3/3/3/3/3
+    1.5    3    106.25    106.25    108.74    108.74    108.74    +0.00± 0.00       -2.49± 3.28      3/3/3/3/3
+      2    3     95.56     95.56     94.69     94.69     94.69    +0.00± 0.00       +0.87± 2.78      3/3/3/3/3
+    2.5    3     83.77     83.77     81.65     81.65     81.65    +0.00± 0.00       +2.12± 4.40      3/3/3/3/3
+    all   18    105.16    105.16    109.62    109.62    109.62    +0.00± 0.00       -4.46± 2.03      18/18/18/18/18
 -- T2, setting e
-   R_th    n        DQ      DQ_1           DQ-DQ_1   QoS met DQ/DQ_1
-      0    3    161.18    161.68    -0.50± 1.82      3/3
-    0.5    3    156.15    160.29    -4.15± 3.99      3/3
-      1    3    153.44    149.27    +4.16± 2.87      3/3
-    1.5    3    137.06    131.81    +5.25± 3.97      3/3
-      2    3    115.70    112.23    +3.46±10.98      3/3
-    2.5    3    102.81     96.05    +6.76± 4.27      3/3
-    all   18    137.72    135.22    +2.50± 2.09      18/18
+   R_th    n        DQ      DQ_1         J        JH        J1           DQ-DQ_1              DQ-J   QoS met DQ/DQ_1/J/JH/J1
+      0    3    161.18    161.68    158.62    158.62    158.62    -0.50± 1.82       +2.55± 5.36      3/3/3/3/3
+    0.5    3    156.15    160.29    155.20    155.20    155.20    -4.15± 3.99       +0.95± 3.83      3/3/3/3/3
+      1    3    153.44    149.27    143.46    143.46    143.46    +4.16± 2.87       +9.97± 2.63      3/3/3/3/3
+    1.5    3    137.06    131.81    137.38    137.38    137.38    +5.25± 3.97       -0.31± 6.64      3/3/3/3/3
+      2    3    115.70    112.23    127.31    127.31    127.31    +3.46±10.98      -11.61± 5.85      3/3/3/3/3
+    2.5    3    102.81     96.05    110.35    110.35    110.35    +6.76± 4.27       -7.54± 2.75      3/3/3/3/3
+    all   18    137.72    135.22    138.72    138.72    138.72    +2.50± 2.09       -1.00± 2.35      18/18/18/18/18
 -- T2, setting f
-   R_th    n        DQ      DQ_1           DQ-DQ_1   QoS met DQ/DQ_1
-      0    3    157.93    155.97    +1.96± 1.62      3/3
-    0.5    3    154.10    156.20    -2.10± 2.17      3/3
-      1    3    142.76    144.99    -2.23± 3.34      3/3
-    1.5    3    133.06    131.89    +1.17± 4.50      3/3
-      2    3    127.21    123.27    +3.94± 6.68      3/3
-    2.5    3    119.30    113.51    +5.79± 1.42      3/3
-    all   18    139.06    137.64    +1.42± 1.48      18/18
+   R_th    n        DQ      DQ_1         J        JH        J1           DQ-DQ_1              DQ-J   QoS met DQ/DQ_1/J/JH/J1
+      0    3    157.93    155.97    147.89    146.67    146.28    +1.96± 1.62      +10.04± 1.40      3/3/3/3/3
+    0.5    3    154.10    156.20    147.09    145.38    144.94    -2.10± 2.17       +7.01± 5.30      3/3/3/3/3
+      1    3    142.76    144.99    142.09    143.02    140.89    -2.23± 3.34       +0.67± 7.37      3/3/3/3/3
+    1.5    3    133.06    131.89    129.85    132.11    130.11    +1.17± 4.50       +3.21± 8.19      3/3/3/3/3
+      2    3    127.21    123.27    125.83    130.55    125.27    +3.94± 6.68       +1.37± 5.76      3/3/3/3/3
+    2.5    3    119.30    113.51    119.92    119.92    114.14    +5.79± 1.42       -0.62± 4.25      3/3/3/3/3
+    all   18    139.06    137.64    135.45    136.27    133.60    +1.42± 1.48       +3.61± 2.19      18/18/18/18/18
 -- DQ: mean served streams 10.56, group-common served 1.44, private served 8.12; BS-specific in 73/108 runs; per run, carried by a subset of the BSs: group-common 0.24, private 1.67
--- CPU per run (s): DQ 160.9, DQ_1 68.1; DQ discrete design 0.002
+-- J: stream-set test made in 36/108 runs, 1-layer kept in 12
+-- CPU per run (s): DQ 160.9, DQ_1 68.1, J 72.6, JH 78.5, J1 54.0; DQ discrete design 0.002
 
-===== scenario E3, Q = 50: 108 common runs (DQ: 108, DQ_1: 108)
+===== scenario E3, Q = 50: 108 common runs (DQ: 108, DQ_1: 108, JH: 108, J1: 108)
 -- E3, all settings
-   R_th    n        DQ      DQ_1           DQ-DQ_1   QoS met DQ/DQ_1
-      0   18    141.88    140.84    +1.04± 0.58      18/18
-    0.5   18    137.72    137.52    +0.20± 0.25      18/18
-      1   18    135.01    134.98    +0.03± 0.32      18/18
-    1.5   18    128.66    127.57    +1.09± 0.83      18/18
-      2   18    122.31    118.64    +3.67± 1.65      18/18
-    2.5   18    112.24    112.01    +0.23± 0.94      18/18
-    all  108    129.64    128.60    +1.04± 0.38      108/108
+   R_th    n        DQ      DQ_1         J        JH        J1           DQ-DQ_1              DQ-J   QoS met DQ/DQ_1/J/JH/J1
+      0   18    141.88    140.84    139.50    139.60    139.09    +1.04± 0.58       +2.38± 3.82      18/18/18/18/18
+    0.5   18    137.72    137.52    133.02    133.37    132.32    +0.20± 0.25       +4.70± 3.79      18/18/18/18/18
+      1   18    135.01    134.98    124.99    126.26    124.38    +0.03± 0.32      +10.02± 2.61      18/18/18/18/18
+    1.5   18    128.66    127.57    112.79    112.47    112.00    +1.09± 0.83      +15.87± 3.10      18/18/18/18/18
+      2   18    122.31    118.64     95.46     95.46     95.61    +3.67± 1.65      +26.86± 5.64      18/18/16/16/16
+    2.5   18    112.24    112.01     78.43     79.12     78.16    +0.23± 0.94      +33.81± 6.67      18/18/12/12/12
+    all  108    129.64    128.60    114.03    114.38    113.59    +1.04± 0.38      +15.61± 2.11      108/108/100/100/100
 -- E3, setting a
-   R_th    n        DQ      DQ_1           DQ-DQ_1   QoS met DQ/DQ_1
-      0    3    142.20    142.00    +0.20± 0.26      3/3
-    0.5    3    140.67    141.55    -0.88± 0.65      3/3
-      1    3    141.17    140.54    +0.62± 0.34      3/3
-    1.5    3    139.87    140.17    -0.30± 1.91      3/3
-      2    3    141.88    136.73    +5.15± 4.31      3/3
-    2.5    3    139.37    140.23    -0.86± 1.31      3/3
-    all   18    140.86    140.20    +0.66± 0.86      18/18
+   R_th    n        DQ      DQ_1         J        JH        J1           DQ-DQ_1              DQ-J   QoS met DQ/DQ_1/J/JH/J1
+      0    3    142.20    142.00    137.13    137.13    137.13    +0.20± 0.26       +5.07± 4.81      3/3/3/3/3
+    0.5    3    140.67    141.55    135.09    135.09    135.09    -0.88± 0.65       +5.58± 4.61      3/3/3/3/3
+      1    3    141.17    140.54    143.92    143.92    143.92    +0.62± 0.34       -2.75± 4.07      3/3/3/3/3
+    1.5    3    139.87    140.17    138.21    138.21    138.21    -0.30± 1.91       +1.66± 5.20      3/3/3/3/3
+      2    3    141.88    136.73    143.74    143.74    143.74    +5.15± 4.31       -1.86± 3.05      3/3/3/3/3
+    2.5    3    139.37    140.23    138.79    138.79    138.79    -0.86± 1.31       +0.58± 2.72      3/3/3/3/3
+    all   18    140.86    140.20    139.48    139.48    139.48    +0.66± 0.86       +1.38± 1.62      18/18/18/18/18
 -- E3, setting b
-   R_th    n        DQ      DQ_1           DQ-DQ_1   QoS met DQ/DQ_1
-      0    3     84.35     84.35    +0.00± 0.00      3/3
-    0.5    3     81.23     81.23    +0.00± 0.00      3/3
-      1    3     78.51     78.51    +0.00± 0.00      3/3
-    1.5    3     80.12     80.12    +0.00± 0.00      3/3
-      2    3     73.24     73.24    +0.00± 0.00      3/3
-    2.5    3     68.25     68.25    +0.00± 0.00      3/3
-    all   18     77.62     77.62    +0.00± 0.00      18/18
+   R_th    n        DQ      DQ_1         J        JH        J1           DQ-DQ_1              DQ-J   QoS met DQ/DQ_1/J/JH/J1
+      0    3     84.35     84.35     76.67     76.67     76.67    +0.00± 0.00       +7.68± 6.29      3/3/3/3/3
+    0.5    3     81.23     81.23     68.77     68.77     68.77    +0.00± 0.00      +12.46± 4.81      3/3/3/3/3
+      1    3     78.51     78.51     60.77     60.77     60.77    +0.00± 0.00      +17.74± 3.55      3/3/3/3/3
+    1.5    3     80.12     80.12     51.52     51.52     51.52    +0.00± 0.00      +28.60± 2.67      3/3/3/3/3
+      2    3     73.24     73.24     42.80     42.80     42.80    +0.00± 0.00      +30.43± 3.93      3/3/3/3/3
+    2.5    3     68.25     68.25      0.00      0.00      0.00    +0.00± 0.00      +68.25± 4.70      3/3/0/0/0
+    all   18     77.62     77.62     50.09     50.09     50.09    +0.00± 0.00      +27.53± 5.07      18/18/15/15/15
 -- E3, setting c
-   R_th    n        DQ      DQ_1           DQ-DQ_1   QoS met DQ/DQ_1
-      0    3    106.98    106.98    +0.00± 0.00      3/3
-    0.5    3    101.39    101.39    +0.00± 0.00      3/3
-      1    3     96.65     96.65    +0.00± 0.00      3/3
-    1.5    3     87.51     87.51    +0.00± 0.00      3/3
-      2    3     77.39     77.39    +0.00± 0.00      3/3
-    2.5    3     51.67     51.67    +0.00± 0.00      3/3
-    all   18     86.93     86.93    +0.00± 0.00      18/18
+   R_th    n        DQ      DQ_1         J        JH        J1           DQ-DQ_1              DQ-J   QoS met DQ/DQ_1/J/JH/J1
+      0    3    106.98    106.98    122.35    122.35    122.35    +0.00± 0.00      -15.37± 1.40      3/3/3/3/3
+    0.5    3    101.39    101.39    105.73    105.73    105.73    +0.00± 0.00       -4.34± 3.67      3/3/3/3/3
+      1    3     96.65     96.65     85.46     85.46     85.46    +0.00± 0.00      +11.19± 4.39      3/3/3/3/3
+    1.5    3     87.51     87.51     64.42     64.42     64.42    +0.00± 0.00      +23.09± 6.24      3/3/3/3/3
+      2    3     77.39     77.39     12.73     12.73     12.73    +0.00± 0.00      +64.66±11.11      3/3/1/1/1
+    2.5    3     51.67     51.67      0.00      0.00      0.00    +0.00± 0.00      +51.67± 3.80      3/3/0/0/0
+    all   18     86.93     86.93     65.12     65.12     65.12    +0.00± 0.00      +21.82± 7.23      18/18/13/13/13
 -- E3, setting d
-   R_th    n        DQ      DQ_1           DQ-DQ_1   QoS met DQ/DQ_1
-      0    3    129.40    129.40    +0.00± 0.00      3/3
-    0.5    3    129.68    129.68    +0.00± 0.00      3/3
-      1    3    125.03    125.03    +0.00± 0.00      3/3
-    1.5    3    120.36    120.36    +0.00± 0.00      3/3
-      2    3    117.37    117.37    +0.00± 0.00      3/3
-    2.5    3    119.49    119.49    +0.00± 0.00      3/3
-    all   18    123.55    123.55    +0.00± 0.00      18/18
+   R_th    n        DQ      DQ_1         J        JH        J1           DQ-DQ_1              DQ-J   QoS met DQ/DQ_1/J/JH/J1
+      0    3    129.40    129.40    124.94    124.94    124.94    +0.00± 0.00       +4.46± 8.67      3/3/3/3/3
+    0.5    3    129.68    129.68    116.46    116.46    116.46    +0.00± 0.00      +13.21± 6.49      3/3/3/3/3
+      1    3    125.03    125.03    107.64    107.64    107.64    +0.00± 0.00      +17.39± 5.78      3/3/3/3/3
+    1.5    3    120.36    120.36     95.37     95.37     95.37    +0.00± 0.00      +24.99± 4.34      3/3/3/3/3
+      2    3    117.37    117.37     81.89     81.89     81.89    +0.00± 0.00      +35.48± 4.09      3/3/3/3/3
+    2.5    3    119.49    119.49     67.18     67.18     67.18    +0.00± 0.00      +52.32± 4.34      3/3/3/3/3
+    all   18    123.55    123.55     98.91     98.91     98.91    +0.00± 0.00      +24.64± 4.30      18/18/18/18/18
 -- E3, setting e
-   R_th    n        DQ      DQ_1           DQ-DQ_1   QoS met DQ/DQ_1
-      0    3    182.13    182.13    +0.00± 0.00      3/3
-    0.5    3    170.25    170.25    +0.00± 0.00      3/3
-      1    3    175.87    175.87    +0.00± 0.00      3/3
-    1.5    3    157.73    157.73    +0.00± 0.00      3/3
-      2    3    141.03    141.03    +0.00± 0.00      3/3
-    2.5    3    128.01    128.01    +0.00± 0.00      3/3
-    all   18    159.17    159.17    +0.00± 0.00      18/18
+   R_th    n        DQ      DQ_1         J        JH        J1           DQ-DQ_1              DQ-J   QoS met DQ/DQ_1/J/JH/J1
+      0    3    182.13    182.13    195.79    195.79    195.79    +0.00± 0.00      -13.66± 3.24      3/3/3/3/3
+    0.5    3    170.25    170.25    191.44    191.44    191.44    +0.00± 0.00      -21.19± 3.67      3/3/3/3/3
+      1    3    175.87    175.87    173.39    173.39    173.39    +0.00± 0.00       +2.48± 8.14      3/3/3/3/3
+    1.5    3    157.73    157.73    150.58    150.58    150.58    +0.00± 0.00       +7.15± 5.95      3/3/3/3/3
+      2    3    141.03    141.03    124.31    124.31    124.31    +0.00± 0.00      +16.72±12.24      3/3/3/3/3
+    2.5    3    128.01    128.01     98.11     98.11     98.11    +0.00± 0.00      +29.90±11.04      3/3/3/3/3
+    all   18    159.17    159.17    155.60    155.60    155.60    +0.00± 0.00       +3.57± 5.03      18/18/18/18/18
 -- E3, setting f
-   R_th    n        DQ      DQ_1           DQ-DQ_1   QoS met DQ/DQ_1
-      0    3    206.20    200.15    +6.05± 1.35      3/3
-    0.5    3    203.11    201.04    +2.07± 0.57      3/3
-      1    3    192.84    193.29    -0.45± 2.18      3/3
-    1.5    3    186.38    179.57    +6.81± 3.44      3/3
-      2    3    182.96    166.07   +16.89± 2.33      3/3
-    2.5    3    166.67    164.44    +2.23± 6.41      3/3
-    all   18    189.69    184.09    +5.60± 1.77      18/18
+   R_th    n        DQ      DQ_1         J        JH        J1           DQ-DQ_1              DQ-J   QoS met DQ/DQ_1/J/JH/J1
+      0    3    206.20    200.15    180.11    180.70    177.67    +6.05± 1.35      +26.09± 2.92      3/3/3/3/3
+    0.5    3    203.11    201.04    180.64    182.69    176.42    +2.07± 0.57      +22.47± 4.08      3/3/3/3/3
+      1    3    192.84    193.29    178.75    186.37    175.12    -0.45± 2.18      +14.09± 4.79      3/3/3/3/3
+    1.5    3    186.38    179.57    176.63    174.75    171.90    +6.81± 3.44       +9.75± 7.48      3/3/3/3/3
+      2    3    182.96    166.07    167.27    167.27    168.19   +16.89± 2.33      +15.70± 4.82      3/3/3/3/3
+    2.5    3    166.67    164.44    166.51    170.67    164.90    +2.23± 6.41       +0.16± 6.00      3/3/3/3/3
+    all   18    189.69    184.09    174.98    177.07    172.37    +5.60± 1.77      +14.71± 2.72      18/18/18/18/18
 -- DQ: mean served streams 11.50, group-common served 0.78, private served 9.72; BS-specific in 84/108 runs; per run, carried by a subset of the BSs: group-common 0.00, private 4.39
--- CPU per run (s): DQ 181.7, DQ_1 133.0; DQ discrete design 0.002
+-- J: stream-set test made in 18/108 runs, 1-layer kept in 9
+-- CPU per run (s): DQ 181.7, DQ_1 133.0, J 107.6, JH 95.3, J1 108.7; DQ discrete design 0.002
 ```
 
 **Reading.** At Q = 50 the mean of DQ − DQ_1 is positive at every R_th from 1 to 2.5 in both scenarios (T2: +0.30,
@@ -444,6 +449,49 @@ T2 b–d and E3 b–e is identical), single paired differences range from −11 
 resolve a margin of 1–3 bit/s/Hz diluted over six settings. By setting: E3 f +5.60 ± 1.77 and T2 e +2.50 ± 2.09
 (positive at R_th ≥ 1), T2 f +1.42 ± 1.48 (+5.8 ± 1.4 at R_th = 2.5), T2 a −0.45 ± 1.13 and E3 a +0.66 ± 0.86 (where
 every UE already has a private stream and the group-common streams are extra streams in free slots).
+
+**Calibration: the current design in the same tier.** `python3 tools/report.py JH` at Q = 50 on the same 216 runs
+(JH and J1, which differ only in T2 a, T2 f and E3 f):
+
+```
+===== scenario T2, Q = 50: 108 common runs (JH: 108, J1: 108)
+-- T2, all settings
+   R_th    n        JH         J        J1             JH-J1              J-J1   QoS met JH/J/J1
+      0   18    123.91    124.68    123.76    +0.15± 0.81       +0.92± 0.47      18/18/18
+    0.5   18    120.44    121.41    120.85    -0.41± 1.00       +0.55± 0.64      18/18/18
+      1   18    113.02    113.54    112.95    +0.07± 0.86       +0.59± 0.46      18/18/18
+    1.5   18    103.47    103.61    103.59    -0.12± 0.71       +0.02± 0.27      18/18/18
+      2   18     94.06     93.54     93.22    +0.84± 0.63       +0.32± 0.18      18/18/18
+    2.5   18     77.34     76.86     75.61    +1.72± 0.97       +1.25± 0.89      15/15/15
+    all  108    105.37    105.61    105.00    +0.37± 0.34       +0.61± 0.22      105/105/105
+-- JH: mean served streams 9.50, group-common served 1.00, private served 7.50; BS-specific in 0/108 runs; per run, carried by a subset of the BSs: group-common 0.00, private 0.00
+-- J: stream-set test made in 36/108 runs, 1-layer kept in 12
+-- CPU per run (s): JH 78.5, J 72.6, J1 54.0; JH discrete design 0.001
+
+===== scenario E3, Q = 50: 108 common runs (JH: 108, J1: 108)
+-- E3, all settings
+   R_th    n        JH         J        J1             JH-J1              J-J1   QoS met JH/J/J1
+      0   18    139.60    139.50    139.09    +0.50± 0.43       +0.41± 0.41      18/18/18
+    0.5   18    133.37    133.02    132.32    +1.05± 0.76       +0.70± 0.70      18/18/18
+      1   18    126.26    124.99    124.38    +1.87± 1.19       +0.60± 0.60      18/18/18
+    1.5   18    112.47    112.79    112.00    +0.47± 0.65       +0.79± 0.55      18/18/18
+      2   18     95.46     95.46     95.61    -0.15± 0.73       -0.15± 0.73      16/16/16
+    2.5   18     79.12     78.43     78.16    +0.96± 0.73       +0.27± 0.27      12/12/12
+    all  108    114.38    114.03    113.59    +0.78± 0.32       +0.44± 0.23      100/100/100
+-- JH: mean served streams 8.83, group-common served 0.17, private served 7.67; BS-specific in 0/108 runs; per run, carried by a subset of the BSs: group-common 0.00, private 0.00
+-- J: stream-set test made in 18/108 runs, 1-layer kept in 9
+-- CPU per run (s): JH 95.3, J 107.6, J1 108.7; JH discrete design 0.001
+```
+
+The current design's group-common streams do not beat its own 1-layer RSMA more clearly in this tier: JH − J1 = +0.15,
+−0.41, +0.07, −0.12, +0.84, +1.72 (T2) and +0.50, +1.05, +1.87, +0.47, −0.15, +0.96 (E3), every value within two
+standard errors of zero. With three drops and the differences confined to a few settings, the confirm tier resolves
+R1 only where the gain is large. DQ − DQ_1 is of the same size as JH − J1 in T2 and larger at R_th = 2 in E3.
+
+**DQ against the current framework at Q = 50** (same table, column DQ − J): T2 −7.0, −6.7, −3.6, −0.8, +0.5, +1.0
+(−2.8 ± 1.1 over all runs: lower at low R_th, where the BS-specific core private streams at small S_max are
+interference-limited, §5); E3 +2.4, +4.7, +10.0, +15.9, +26.9, +33.8 (+15.6 ± 2.1), where J misses the QoS in 8 of 108
+runs and DQ in none.
 
 ### 3.2 R1 in the composition-study setting (Q = 50, `tools/rsweep.py`)
 
@@ -609,8 +657,8 @@ a subset of the BSs.
   Where the BSs carry the same streams or the HRS adds nothing, DQ costs what DQ_1 costs. In setting f the BSs carry
   the core private streams, 3–5 group-common streams and different non-core private streams (about 21 distinct
   streams, BS-specific), and a run costs 550–600 CPU-s, about twice the current design's (about 300 CPU-s, FINDINGS.md
-  §7) and about 4 (T2) and 2 (E3) times its own 1-layer counterpart's. Over the grid: 161 (T2) and 182 (E3) CPU-s per run, against about
-  110 for the current design (README: 6.8 CPU-h for 216 runs).
+  §7) and about 4 (T2) and 2 (E3) times its own 1-layer counterpart's. Over the grid: 161 (T2) and 182 (E3) CPU-s per run,
+  against 73 and 108 for the current framework J (78 and 95 for JH) in the same tier.
 * **Benchmark setting** (15 runs): DQ 129 CPU-s per run (J 102, sparse beamforming 85); stream clustering on DQ's
   streams 383 (on J's 328). S_max tier: 69 CPU-s per run. Q = 5 screen: 16.3 (T2) and 20.9 (E3) CPU-s per run (JH 6.3
   and 9.1).
@@ -674,12 +722,14 @@ What these runs established:
 * **R_th = 0.5 in T2.** −1.28 ± 0.80 at Q = 50 (−0.18 ± 0.33 at Q = 5; −1.90 ± 1.43 in the composition-study
   setting): at a low QoS load the group-common streams are worth a little less than the private streams of the
   non-core users whose slots they take.
-* **Low R_th at tight fronthaul in T2.** With S_max = N + 1 or 2N, the BSs carry different core private streams, which
-  are interference-limited when every BS reaches every UE: at Q = 5, DQ − J = −12.4 (T2 b), −20.0 (T2 c), −7.1 (T2 d)
-  at R_th = 0, and −10.9 (E3 e) at R_th = 0. From R_th ≈ 1.5 on, the same association is far better than joint
-  transmission (E3 b–d: +17 … +48 at R_th 1.5–2.5), because more UEs have private streams. This is the trade-off
-  the thesis states in §4.1 for BS-specific associations; the design accepts it because the request is a design in
-  which each BS has its own stream set.
+* **Low R_th at tight fronthaul.** With S_max = N + 1 or 2N, the BSs carry different core private streams, which are
+  interference-limited when every BS reaches every UE: at Q = 50 and R_th = 0, DQ − J = −8.8 (T2 b), −35.0 (T2 c),
+  −6.5 (T2 d), −15.4 (E3 c) and −13.7 (E3 e) (at Q = 5: −12.4, −20.0, −7.1, and −10.9 in E3 e). With room for every
+  core user at every BS the design is joint and gains instead (R_th = 0: +10.0 in T2 f, +26.1 in E3 f). From
+  R_th ≈ 1.5 on, the same BS-specific association is far better than joint transmission because more UEs have private
+  streams (Q = 50, E3 b–d at R_th = 1.5–2.5: +23 … +68, where J misses the QoS in 8 of the 27 runs and DQ in none).
+  This is the trade-off the thesis states in §4.1 for BS-specific associations; the design accepts it because the
+  request is a design in which each BS has its own stream set.
 * **Fewer core users can cost where every UE could have a beam.** In T2 a (K = 8, BN = 6) the ZF rule keeps 4–5 core
   users: the AO starts with fewer ZF beams and DQ is 4.6 below J at Q = 5 (all eight private streams are still
   carried).
@@ -717,9 +767,8 @@ What these runs established:
   (screen, Q = 5 bench check, Q = 50 bench of DQ and DQ@SC, which started before the switch) are runs of the same
   design. In configurations outside the tiers, `bsdesign.py` adds two guards that the prototype lacks (no group of
   all K UEs when only one core user is kept; linearly dependent channels end the ZF rule).
-* **JH and J1 were not run at Q = 50.** The README makes them optional; the confirm and smax tiers of DQ took the
-  compute (DQ's runs of setting f cost 650–900 CPU-s each at Q = 50). The reference to J is the Q = 5 screen (JH, J1
-  on all 288 runs) and the stored benchmark runs (Q = 50).
+* **JH and J1 at Q = 50** (optional in the README) were run after DQ and DQ_1 on the confirm tier, as the reference of
+  §3.1 and as a calibration of what the tier can resolve.
 * **The 1-layer counterpart** is a variant of its own (`DQ_1`, `one_layer` of `DQ`): the same lists without
   group-common streams.
 
