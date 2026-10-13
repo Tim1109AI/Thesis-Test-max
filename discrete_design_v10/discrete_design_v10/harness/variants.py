@@ -51,4 +51,7 @@ VARIANTS.update({'DH': dict(design='bsd:dh', one_layer='D1s_1', opt=SUPPORT_STAR
 # SUS core users stopped by the ZF sum rate, nearest-core groups, per-BS own-gain ranking
 VARIANTS.update({'DZ': dict(design='bsd:dz', one_layer='DZ_1', opt=SUPPORT_START), 'DZ_1': dict(design='bsd:dz_1', opt=SUPPORT_START)})
 # DZ with the QoS floor on the number of core users
-VARIANTS.update({'DQ': dict(design='bsd:dq', one_layer='DQ_1', opt=SUPPORT_START), 'DQ_1': dict(design='bsd:dq_1', opt=SUPPORT_START)})
+# THE PROPOSED DESIGN (code/bsdesign.py; identical designs to the prototype bsd:dq on every configuration of the
+# screen, confirm, bench and smax tiers, with which the Q = 5 screen and the Q = 5 bench check were run)
+VARIANTS.update({'DQ': dict(design='bsdesign:design', one_layer='DQ_1', opt=SUPPORT_START),
+                 'DQ_1': dict(design='bsdesign:design_1layer', opt=SUPPORT_START)})

@@ -15,7 +15,6 @@ One central design, computed from the direct channels before the deployment sear
 The 1-layer counterpart (design_1layer) uses the same lists without the group-common streams. Nothing depends on B = 2
 or 3 or on the BS positions; the only inputs are the channels and the settings (B, N, K, S_max, P_max, R_th).
 """
-import math
 import numpy as np
 import hrs as H_
 
