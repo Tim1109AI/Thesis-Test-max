@@ -25,7 +25,7 @@ large area means the BSs around it. No parameter, no test, no optimization; abou
 | R1 (Q = 50, confirm) | PENDING |
 | R2 (Q = 50, bench) | DQ 76.3 / 86.1 / 86.1 (M = 100 / 300 / 500) vs sparse BF 63.1 / 75.1 / 81.0 (DQ − sparse BF = +9.8 ± 2.6 over the 15 runs) and stream clustering on DQ 44.5 / 57.2 / 62.5 (+28.1 ± 2.2); J 73.5 / 82.0 / 88.7 |
 | R3 (Q = 50, bench) | super-common 14.1 %, group-common 10.1 % of the sum rate (15/15 runs meet the QoS) |
-| R4 (Q = 50, smax) | PENDING |
+| R4 (Q = 50, smax) | rises with S_max and flattens: K = 8: 73.4 → 96.5 → 97.4 → 97.5 → 99.4 → 99.4 → 99.4; K = 12: 68.6 → 94.4 → 111.9 → 115.1 → 113.7 → 116.9 → 116.5; K = 16: 61.0 → 72.8 → 102.7 → 102.7 → 109.8 → 107.6 → 108.9 (S_max = 4 … 16); largest step down −2.2 ± 1.9 |
 | BS-specific streams | in 97/144 (T2) and 114/144 (E3) screen runs and in 9/15 benchmark runs; private streams in both scenarios, group-common streams in T2 (setting e) |
 
 ## 1. The design
@@ -363,8 +363,37 @@ at M = 100 and 300, below at M = 500.
 ### 3.5 R4 (`--tier smax`, Q = 50)
 
 ```
-SMAX_REPORT
+===== sum rate versus S_max (T2, N = 3, M = 300, Q = 50): 126 runs of DQ
+-- K = 8: mean sum rate over the drops (QoS met / runs)
+  R_th          S=4          S=6          S=8         S=10         S=12         S=14         S=16
+     0   77.83  2/2   101.66  2/2   100.67  2/2   101.96  2/2   101.55  2/2   101.55  2/2   101.55  2/2 
+     1   77.07  2/2    97.24  2/2    98.75  2/2    96.02  2/2    96.12  2/2    96.12  2/2    96.12  2/2 
+     2   65.22  2/2    90.46  2/2    92.66  2/2    94.36  2/2   100.52  2/2   100.52  2/2   100.52  2/2 
+   all   73.38  6/6    96.45  6/6    97.36  6/6    97.45  6/6    99.40  6/6    99.40  6/6    99.40  6/6 
+   change to the next S_max (paired over R_th and drops): 4->6 +23.08±1.00, 6->8 +0.91±0.85, 8->10 +0.09±2.20, 10->12 +1.95±4.48, 12->14 +0.00±0.00, 14->16 +0.00±0.00
+-- K = 12: mean sum rate over the drops (QoS met / runs)
+  R_th          S=4          S=6          S=8         S=10         S=12         S=14         S=16
+     0   76.07  2/2   104.33  2/2   122.90  2/2   122.35  2/2   122.46  2/2   121.53  2/2   121.46  2/2 
+     1   66.74  2/2    96.88  2/2   116.07  2/2   118.51  2/2   116.68  2/2   117.50  2/2   117.39  2/2 
+     2   62.83  2/2    82.11  2/2    96.83  2/2   104.32  2/2   102.03  2/2   111.68  2/2   110.73  2/2 
+   all   68.55  6/6    94.44  6/6   111.93  6/6   115.06  6/6   113.72  6/6   116.90  6/6   116.53  6/6 
+   change to the next S_max (paired over R_th and drops): 4->6 +25.89±4.38, 6->8 +17.49±5.65, 8->10 +3.13±1.87, 10->12 -1.34±0.58, 12->14 +3.18±2.37, 14->16 -0.37±0.64
+-- K = 16: mean sum rate over the drops (QoS met / runs)
+  R_th          S=4          S=6          S=8         S=10         S=12         S=14         S=16
+     0   73.34  2/2    82.43  2/2   123.32  2/2   122.97  2/2   121.61  2/2   122.01  2/2   122.60  2/2 
+     1   66.66  2/2    80.67  2/2   112.45  2/2   109.53  2/2   115.07  2/2   114.67  2/2   115.95  2/2 
+     2   43.12  2/2    55.44  2/2    72.46  2/2    75.65  2/2    92.66  2/2    86.02  2/2    88.05  2/2 
+   all   61.04  6/6    72.84  6/6   102.74  6/6   102.72  6/6   109.78  6/6   107.56  6/6   108.87  6/6 
+   change to the next S_max (paired over R_th and drops): 4->6 +11.81±3.26, 6->8 +29.90±4.62, 8->10 -0.03±1.25, 10->12 +7.06±4.25, 12->14 -2.22±1.87, 14->16 +1.30±1.20
 ```
+
+The sum rate rises with S_max and flattens out once every BS carries the core private streams and the group-common
+streams (from S_max = 6 for K = 8, 10 for K = 12 and 12 for K = 16). The steps along the plateau are within ±2.3 bit/s/Hz:
+the largest decreases are −1.34 ± 0.58 (K = 12, S_max 10 → 12) and −2.22 ± 1.87 (K = 16, 12 → 14). The stream
+set of every BS is nested in S_max (§2), so a larger S_max only adds streams (on the plateau: private streams of
+non-core users, which carry almost nothing); the small decreases are differences of the search and the AO with the
+added streams, not of the design. (For reference, the thesis figure, Fig. 5.5, has the current design at
+S_max = 4 / 6 / 12 only.)
 
 ### 3.6 Where the BSs carry different streams
 
