@@ -214,6 +214,11 @@ core user at every BS (S_max = 28 on the 600 m grid; S_max = 13 with four BSs wi
 behaviour asked for: core users of their own for some BSs, core users shared by several BSs, and all core users at
 all BSs when the scenario allows it.
 
+Robustness (`python3 tools/stress_bsdesign.py`): on 600 random networks (B = 1 … 16 BSs and K = 1 … 48 UEs at random
+positions over areas of 50 m to 2 km, N = 1 … 8, S_max = 1 … 40, R_th = 0 … 4, some with co-located UEs) every design
+and its 1-layer counterpart pass `discrete.check` (disjoint groups of admissible size, at most S_max streams per BS,
+the super-common stream at every BS); 314 of them are BS-specific, 286 joint, 392 have groups.
+
 ### 1.10 AO start for BS-specific stream sets (switch, off by default)
 
 The evaluator's core-user start (`algo.init_core`) computes the regularized ZF directions on all BN antennas and then
@@ -563,8 +568,8 @@ The sum rate rises with S_max and flattens out once every BS carries the core pr
 streams (from S_max = 6 for K = 8, 10 for K = 12 and 12 for K = 16). The steps along the plateau are within ±2.3 bit/s/Hz:
 the largest decreases are −1.34 ± 0.58 (K = 12, S_max 10 → 12) and −2.22 ± 1.87 (K = 16, 12 → 14). The stream
 set of every BS is nested in S_max (§2), so a larger S_max only adds streams (on the plateau: private streams of
-non-core users, which carry almost nothing); the small decreases are differences of the search and the AO with the
-added streams, not of the design. (For reference, the thesis figure, Fig. 5.5, has the current design at
+non-core users); the small decreases are differences of the search and the AO with the added streams, not of the
+design. (For reference, the thesis figure, Fig. 5.5, has the current design at
 S_max = 4 / 6 / 12 only.)
 
 ### 3.6 Where the BSs carry different streams
@@ -574,7 +579,9 @@ T2 and 114 of 144 in E3; per run, on average 1.50 (T2) and 4.62 (E3) private str
 streams are carried by a subset of the BSs. Different private streams: T2 b, c, d, e, f, E3 b–f (core private streams
 in the settings with S_max = N + 1 and 2N, non-core private streams in e and f); different group-common streams: T2 e
 (each BS carries the group-common stream whose weakest member it reaches best, one slot each); in the benchmark
-setting: 9 of 15 runs (non-core private streams). In the Q = 50 confirm runs: BS-specific in 73 of 108 runs (T2) and 84 of 108 (E3); per run 1.67 (T2) and 4.39 (E3) private streams and 0.24 (T2) group-common streams are carried by a subset of the BSs.
+setting: 9 of 15 runs (non-core private streams). In the Q = 50 confirm runs: BS-specific in 73 of 108 runs (T2)
+and 84 of 108 (E3); per run 1.67 (T2) and 4.39 (E3) private streams and 0.24 (T2) group-common streams are carried by
+a subset of the BSs.
 
 ### 3.7 Cost
 
@@ -602,7 +609,7 @@ setting: 9 of 15 runs (non-core private streams). In the Q = 50 confirm runs: BS
   Where the BSs carry the same streams or the HRS adds nothing, DQ costs what DQ_1 costs. In setting f the BSs carry
   the core private streams, 3–5 group-common streams and different non-core private streams (about 21 distinct
   streams, BS-specific), and a run costs 550–600 CPU-s, about twice the current design's (about 300 CPU-s, FINDINGS.md
-  §7) and 2–4 times its own 1-layer counterpart's. Over the grid: 161 (T2) and 182 (E3) CPU-s per run, against about
+  §7) and about 4 (T2) and 2 (E3) times its own 1-layer counterpart's. Over the grid: 161 (T2) and 182 (E3) CPU-s per run, against about
   110 for the current design (README: 6.8 CPU-h for 216 runs).
 * **Benchmark setting** (15 runs): DQ 129 CPU-s per run (J 102, sparse beamforming 85); stream clustering on DQ's
   streams 383 (on J's 328). S_max tier: 69 CPU-s per run. Q = 5 screen: 16.3 (T2) and 20.9 (E3) CPU-s per run (JH 6.3
@@ -723,8 +730,8 @@ What these runs established:
 * `code/algo.py` — `init_core_support` and the seed `rule_s` (the AO start switch, off by default).
 * `code/bsd.py` — every prototype of §4 (D1s … DQ), kept for reproducibility.
 * `harness/variants.py` — `DQ`, `DQ_1` (the design) and the entries of the prototypes.
-* `tools/verify_bsdesign.py`, `tools/design_structure.py`, `tools/large_area.py` — the checks and tables of §1.8,
-  §1.9 and §6; `tools/rsweep.py` — the runs and the report of §3.2 (`results/*__T2__rsweep.jsonl`,
+* `tools/verify_bsdesign.py`, `tools/design_structure.py`, `tools/large_area.py`, `tools/stress_bsdesign.py` — the
+  checks and tables of §1.8, §1.9 and §6; `tools/rsweep.py` — the runs and the report of §3.2 (`results/*__T2__rsweep.jsonl`,
   `results/DQ__report_rsweep.json`).
 * `results/*.jsonl` — every run (harness format, unedited): the design (`DQ`, `DQ_1`, `DQ@SC`), the references
   (`JH`, `J1`), and the prototypes; `results/*report*.json` — the reports of `tools/report.py --json` (`DQ__report.json`:
