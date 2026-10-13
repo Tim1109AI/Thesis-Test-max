@@ -1,0 +1,15 @@
+DQ_1__T2__Q5: 144 runs to do (0 done) -> /home/user/Thesis-Test-max/discrete_design_v10/discrete_design_v10/results/DQ_1__T2__Q5.jsonl
+DQ_1__E3__Q5: 144 runs to do (0 done) -> /home/user/Thesis-Test-max/discrete_design_v10/discrete_design_v10/results/DQ_1__E3__Q5.jsonl
+  [1/288] T2 a drop 901 R_th 0.5: rate 86.10, 9 streams  (2 CPU-s, 10 s elapsed)
+  [2/288] T2 a drop 901 R_th 0: rate 86.26, 9 streams  (2 CPU-s, 10 s elapsed)
+  [3/288] T2 a drop 901 R_th 1: rate 83.27, 9 streams  (2 CPU-s, 11 s elapsed)
+  [4/288] T2 a drop 901 R_th 1.5: rate 78.22, 9 streams  (2 CPU-s, 14 s elapsed)
+  [5/288] T2 a drop 901 R_th 2: rate 80.85, 9 streams  (2 CPU-s, 15 s elapsed)
+  [6/288] T2 a drop 901 R_th 2.5: rate 80.27, 9 streams  (2 CPU-s, 16 s elapsed)
+  [7/288] T2 b drop 901 R_th 0: rate 61.03, 7 streams BS-specific  (3 CPU-s, 21 s elapsed)
+  [8/288] T2 b drop 901 R_th 0.5: rate 58.50, 7 streams BS-specific  (3 CPU-s, 23 s elapsed)
+  [9/288] T2 b drop 901 R_th 1: rate 57.51, 7 streams BS-specific  (4 CPU-s, 26 s elapsed)
+  [10/288] T2 b drop 901 R_th 1.5: rate 46.21, 7 streams BS-specific  (4 CPU-s, 31 s elapsed)
+  [11/288] T2 b drop 901 R_th 2: rate 49.95, 7 streams BS-specific  (6 CPU-s, 37 s elapsed)
+  [12/288] T2 b drop 901 R_th 2.5: rate 42.36, 7 streams BS-specific  (8 CPU-s, 43 s elapsed)
+  [13/288] T2 c drop 901 R_th 0.5: rate 75.82, 7 streams BS-specific  (5 CPU-s, 48 s elapsed)

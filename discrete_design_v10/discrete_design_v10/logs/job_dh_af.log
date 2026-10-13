@@ -1,0 +1,224 @@
+DH__T2__Q5: 48 runs to do (0 done) -> /home/user/Thesis-Test-max/discrete_design_v10/discrete_design_v10/results/DH__T2__Q5.jsonl
+DH__E3__Q5: 48 runs to do (0 done) -> /home/user/Thesis-Test-max/discrete_design_v10/discrete_design_v10/results/DH__E3__Q5.jsonl
+  [1/96] T2 a drop 901 R_th 1: rate 83.89, 11 streams  (3 CPU-s, 9 s elapsed)
+  [2/96] T2 a drop 901 R_th 0: rate 83.89, 11 streams  (3 CPU-s, 10 s elapsed)
+  [3/96] T2 a drop 901 R_th 0.5: rate 83.89, 11 streams  (3 CPU-s, 10 s elapsed)
+  [4/96] T2 a drop 901 R_th 1.5: rate 83.89, 11 streams  (3 CPU-s, 10 s elapsed)
+  [5/96] T2 a drop 901 R_th 2: rate 83.89, 11 streams  (3 CPU-s, 15 s elapsed)
+  [6/96] T2 a drop 901 R_th 2.5: rate 83.89, 11 streams  (3 CPU-s, 15 s elapsed)
+  [7/96] T2 f drop 901 R_th 1.5: rate 107.56, 21 streams BS-specific  (38 CPU-s, 93 s elapsed)
+  [8/96] T2 f drop 901 R_th 0: rate 118.08, 21 streams BS-specific  (64 CPU-s, 139 s elapsed)
+  [9/96] T2 f drop 901 R_th 0.5: rate 118.04, 21 streams BS-specific  (64 CPU-s, 141 s elapsed)
+  [10/96] T2 f drop 901 R_th 1: rate 118.08, 21 streams BS-specific  (63 CPU-s, 144 s elapsed)
+  [11/96] E3 a drop 901 R_th 0: rate 133.97, 9 streams  (3 CPU-s, 147 s elapsed)
+  [12/96] E3 a drop 901 R_th 0.5: rate 133.97, 9 streams  (3 CPU-s, 150 s elapsed)
+  [13/96] E3 a drop 901 R_th 1: rate 133.97, 9 streams  (3 CPU-s, 153 s elapsed)
+  [14/96] E3 a drop 901 R_th 1.5: rate 133.97, 9 streams  (3 CPU-s, 156 s elapsed)
+  [15/96] E3 a drop 901 R_th 2: rate 133.97, 9 streams  (3 CPU-s, 158 s elapsed)
+  [16/96] E3 a drop 901 R_th 2.5: rate 133.97, 9 streams  (3 CPU-s, 161 s elapsed)
+  [17/96] T2 f drop 901 R_th 2: rate 96.48, 21 streams BS-specific  (34 CPU-s, 162 s elapsed)
+  [18/96] T2 f drop 901 R_th 2.5: rate 95.46, 21 streams BS-specific  (45 CPU-s, 230 s elapsed)
+  [19/96] E3 f drop 901 R_th 0.5: rate 167.31, 20 streams  (58 CPU-s, 287 s elapsed)
+  [20/96] E3 f drop 901 R_th 0: rate 167.41, 20 streams  (61 CPU-s, 293 s elapsed)
+  [21/96] E3 f drop 901 R_th 1: rate 165.67, 20 streams  (61 CPU-s, 298 s elapsed)
+  [22/96] T2 a drop 902 R_th 0: rate 99.79, 12 streams  (4 CPU-s, 310 s elapsed)
+  [23/96] T2 a drop 902 R_th 0.5: rate 99.79, 12 streams  (4 CPU-s, 323 s elapsed)
+  [24/96] T2 a drop 902 R_th 1: rate 99.79, 12 streams  (4 CPU-s, 336 s elapsed)
+  [25/96] T2 a drop 902 R_th 1.5: rate 99.79, 12 streams  (4 CPU-s, 348 s elapsed)
+  [26/96] T2 a drop 902 R_th 2: rate 99.79, 12 streams  (4 CPU-s, 360 s elapsed)
+  [27/96] T2 a drop 902 R_th 2.5: rate 99.57, 12 streams  (3 CPU-s, 377 s elapsed)
+  [28/96] E3 f drop 901 R_th 1.5: rate 162.50, 20 streams  (66 CPU-s, 409 s elapsed)
+  [29/96] T2 f drop 902 R_th 0: rate 109.72, 21 streams BS-specific  (20 CPU-s, 424 s elapsed)
+  [30/96] T2 f drop 902 R_th 0.5: rate 109.72, 21 streams BS-specific  (20 CPU-s, 451 s elapsed)
+  [31/96] E3 f drop 901 R_th 2.5: rate 139.99, 20 streams  (64 CPU-s, 457 s elapsed)
+  [32/96] E3 f drop 901 R_th 2: rate 155.79, 20 streams  (68 CPU-s, 462 s elapsed)
+  [33/96] T2 f drop 902 R_th 1: rate 109.72, 21 streams BS-specific  (21 CPU-s, 468 s elapsed)
+  [34/96] E3 a drop 902 R_th 0: rate 115.83, 11 streams  (6 CPU-s, 480 s elapsed)
+  [35/96] E3 a drop 902 R_th 0.5: rate 115.83, 11 streams  (6 CPU-s, 493 s elapsed)
+  [36/96] T2 f drop 902 R_th 2: rate 108.10, 21 streams BS-specific  (20 CPU-s, 498 s elapsed)
+  [37/96] T2 f drop 902 R_th 1.5: rate 109.72, 21 streams BS-specific  (24 CPU-s, 499 s elapsed)
+  [38/96] E3 a drop 902 R_th 1: rate 115.83, 11 streams  (6 CPU-s, 504 s elapsed)
+  [39/96] E3 a drop 902 R_th 1.5: rate 115.83, 11 streams  (6 CPU-s, 509 s elapsed)
+  [40/96] E3 a drop 902 R_th 2: rate 115.83, 11 streams  (5 CPU-s, 510 s elapsed)
+  [41/96] E3 a drop 902 R_th 2.5: rate 116.33, 11 streams  (6 CPU-s, 517 s elapsed)
+  [42/96] T2 f drop 902 R_th 2.5: rate 100.51, 21 streams BS-specific  (33 CPU-s, 529 s elapsed)
+  [43/96] E3 f drop 902 R_th 0.5: rate 178.35, 20 streams  (53 CPU-s, 619 s elapsed)
+  [44/96] E3 f drop 902 R_th 0: rate 178.35, 20 streams  (56 CPU-s, 624 s elapsed)
+  [45/96] E3 f drop 902 R_th 1: rate 177.36, 20 streams  (53 CPU-s, 625 s elapsed)
+  [46/96] T2 a drop 903 R_th 0: rate 104.74, 11 streams  (3 CPU-s, 632 s elapsed)
+  [47/96] E3 f drop 902 R_th 1.5: rate 173.43, 20 streams  (52 CPU-s, 636 s elapsed)
+  [48/96] T2 a drop 903 R_th 0.5: rate 104.74, 11 streams  (3 CPU-s, 640 s elapsed)
+  [49/96] T2 a drop 903 R_th 1: rate 104.74, 11 streams  (3 CPU-s, 647 s elapsed)
+  [50/96] T2 a drop 903 R_th 1.5: rate 104.74, 11 streams  (3 CPU-s, 650 s elapsed)
+  [51/96] T2 a drop 903 R_th 2: rate 104.73, 11 streams  (3 CPU-s, 653 s elapsed)
+  [52/96] T2 a drop 903 R_th 2.5: rate 104.02, 11 streams  (4 CPU-s, 657 s elapsed)
+Process SpawnPoolWorker-7:
+Traceback (most recent call last):
+  File "/usr/lib/python3.13/multiprocessing/pool.py", line 131, in worker
+    put((job, i, result))
+    ~~~^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/multiprocessing/queues.py", line 397, in put
+    self._writer.send_bytes(obj)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/usr/lib/python3.13/multiprocessing/connection.py", line 205, in send_bytes
+    self._send_bytes(m[offset:offset + size])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/multiprocessing/connection.py", line 432, in _send_bytes
+    self._send(header + buf)
+    ~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/multiprocessing/connection.py", line 389, in _send
+    n = write(self._handle, buf)
+BrokenPipeError: [Errno 32] Broken pipe
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/usr/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/multiprocessing/pool.py", line 136, in worker
+    put((job, i, (False, wrapped)))
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/multiprocessing/queues.py", line 397, in put
+    self._writer.send_bytes(obj)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/usr/lib/python3.13/multiprocessing/connection.py", line 205, in send_bytes
+    self._send_bytes(m[offset:offset + size])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/multiprocessing/connection.py", line 432, in _send_bytes
+    self._send(header + buf)
+    ~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/multiprocessing/connection.py", line 389, in _send
+    n = write(self._handle, buf)
+BrokenPipeError: [Errno 32] Broken pipe
+Process SpawnPoolWorker-8:
+Traceback (most recent call last):
+  File "/usr/lib/python3.13/multiprocessing/pool.py", line 131, in worker
+    put((job, i, result))
+    ~~~^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/multiprocessing/queues.py", line 397, in put
+    self._writer.send_bytes(obj)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/usr/lib/python3.13/multiprocessing/connection.py", line 205, in send_bytes
+    self._send_bytes(m[offset:offset + size])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/multiprocessing/connection.py", line 432, in _send_bytes
+    self._send(header + buf)
+    ~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/multiprocessing/connection.py", line 389, in _send
+    n = write(self._handle, buf)
+BrokenPipeError: [Errno 32] Broken pipe
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/usr/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/multiprocessing/pool.py", line 136, in worker
+    put((job, i, (False, wrapped)))
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/multiprocessing/queues.py", line 397, in put
+    self._writer.send_bytes(obj)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/usr/lib/python3.13/multiprocessing/connection.py", line 205, in send_bytes
+    self._send_bytes(m[offset:offset + size])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/multiprocessing/connection.py", line 432, in _send_bytes
+    self._send(header + buf)
+    ~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/multiprocessing/connection.py", line 389, in _send
+    n = write(self._handle, buf)
+BrokenPipeError: [Errno 32] Broken pipe
+Process SpawnPoolWorker-2:
+Traceback (most recent call last):
+  File "/usr/lib/python3.13/multiprocessing/pool.py", line 131, in worker
+    put((job, i, result))
+    ~~~^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/multiprocessing/queues.py", line 397, in put
+    self._writer.send_bytes(obj)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/usr/lib/python3.13/multiprocessing/connection.py", line 205, in send_bytes
+    self._send_bytes(m[offset:offset + size])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/multiprocessing/connection.py", line 432, in _send_bytes
+    self._send(header + buf)
+    ~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/multiprocessing/connection.py", line 389, in _send
+    n = write(self._handle, buf)
+BrokenPipeError: [Errno 32] Broken pipe
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/usr/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/multiprocessing/pool.py", line 136, in worker
+    put((job, i, (False, wrapped)))
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/multiprocessing/queues.py", line 397, in put
+    self._writer.send_bytes(obj)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/usr/lib/python3.13/multiprocessing/connection.py", line 205, in send_bytes
+    self._send_bytes(m[offset:offset + size])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/multiprocessing/connection.py", line 432, in _send_bytes
+    self._send(header + buf)
+    ~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/multiprocessing/connection.py", line 389, in _send
+    n = write(self._handle, buf)
+BrokenPipeError: [Errno 32] Broken pipe
+Process SpawnPoolWorker-6:
+Traceback (most recent call last):
+  File "/usr/lib/python3.13/multiprocessing/pool.py", line 131, in worker
+    put((job, i, result))
+    ~~~^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/multiprocessing/queues.py", line 397, in put
+    self._writer.send_bytes(obj)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/usr/lib/python3.13/multiprocessing/connection.py", line 205, in send_bytes
+    self._send_bytes(m[offset:offset + size])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/multiprocessing/connection.py", line 432, in _send_bytes
+    self._send(header + buf)
+    ~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/multiprocessing/connection.py", line 389, in _send
+    n = write(self._handle, buf)
+BrokenPipeError: [Errno 32] Broken pipe
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/usr/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/multiprocessing/pool.py", line 136, in worker
+    put((job, i, (False, wrapped)))
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/multiprocessing/queues.py", line 397, in put
+    self._writer.send_bytes(obj)
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/usr/lib/python3.13/multiprocessing/connection.py", line 205, in send_bytes
+    self._send_bytes(m[offset:offset + size])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/multiprocessing/connection.py", line 432, in _send_bytes
+    self._send(header + buf)
+    ~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/multiprocessing/connection.py", line 389, in _send
+    n = write(self._handle, buf)
+BrokenPipeError: [Errno 32] Broken pipe
+/usr/lib/python3.13/multiprocessing/resource_tracker.py:479: UserWarning: resource_tracker: There appear to be 6 leaked semaphore objects to clean up at shutdown: {'/mp-b3plogxw', '/mp-nwialwz_', '/mp-mwhqouzf', '/mp-62cida6i', '/mp-nluxrb9k', '/mp-dpcihhu7'}
+  warnings.warn(

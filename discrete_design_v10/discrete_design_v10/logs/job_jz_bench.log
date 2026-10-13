@@ -1,0 +1,8 @@
+JZ__T2__bench__Q5: 6 runs to do (0 done) -> /home/user/Thesis-Test-max/discrete_design_v10/discrete_design_v10/results/JZ__T2__bench__Q5.jsonl
+  [1/6] T2 bench_M100 drop 801 R_th 2: rate 39.47, 12 streams  (19 CPU-s, 21 s elapsed)
+  [2/6] T2 bench_M100 drop 802 R_th 2: rate 67.72, 12 streams  (15 CPU-s, 37 s elapsed)
+  [3/6] T2 bench_M300 drop 801 R_th 2: rate 54.66, 12 streams  (18 CPU-s, 55 s elapsed)
+  [4/6] T2 bench_M300 drop 802 R_th 2: rate 78.66, 12 streams  (17 CPU-s, 73 s elapsed)
+  [5/6] T2 bench_M500 drop 801 R_th 2: rate 44.27, 12 streams  (17 CPU-s, 90 s elapsed)
+  [6/6] T2 bench_M500 drop 802 R_th 2: rate 84.30, 12 streams  (15 CPU-s, 105 s elapsed)
+DONE

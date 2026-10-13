@@ -1,0 +1,8 @@
+D2s__T2__bench: 15 runs to do (0 done) -> /home/user/Thesis-Test-max/discrete_design_v10/discrete_design_v10/results/D2s__T2__bench.jsonl
+  [1/15] T2 bench_M100 drop 804 R_th 2: rate 71.53, 12 streams  (115 CPU-s, 120 s elapsed)
+  [2/15] T2 bench_M100 drop 802 R_th 2: rate 68.03, 13 streams BS-specific  (149 CPU-s, 155 s elapsed)
+  [3/15] T2 bench_M100 drop 803 R_th 2: rate 62.02, 15 streams BS-specific  (200 CPU-s, 214 s elapsed)
+  [4/15] T2 bench_M100 drop 801 R_th 2: rate 60.45, 15 streams BS-specific  (241 CPU-s, 274 s elapsed)
+  [5/15] T2 bench_M100 drop 805 R_th 2: rate 65.18, 13 streams BS-specific  (132 CPU-s, 281 s elapsed)
+/usr/lib/python3.13/multiprocessing/resource_tracker.py:479: UserWarning: resource_tracker: There appear to be 6 leaked semaphore objects to clean up at shutdown: {'/mp-f95a2apc', '/mp-nyiqabb5', '/mp-24pp6887', '/mp-8ca3vk_h', '/mp-42p6lji1', '/mp-zvn8x0to'}
+  warnings.warn(
