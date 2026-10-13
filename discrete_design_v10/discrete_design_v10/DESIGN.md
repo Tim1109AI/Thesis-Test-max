@@ -451,10 +451,11 @@ What these runs established:
 
 * **R1 has a narrow base in the grid.** The design ties its 1-layer counterpart exactly wherever the core private
   streams fill the fronthaul: T2 b, c, d and E3 b, c, d, e (7 of the 12 scenario-settings). All of R1 comes from T2 a,
-  e, f and E3 a, f, where group-common streams take free slots. In E3 the margin at R_th = 1 is small (one drop
-  of E3 f decides the Q = 5 screen, §3.3); see §3.1 for Q = 50 and §3.2 for the composition-study setting. A design that would also gain in the small-S_max
-  settings has to give group-common streams slots that the core private streams hold, and every such rule I tried
-  either loses at R_th = 0 (D4s, JTg1/JTg2) or needs a rate model of the AO outcome (§4).
+  e, f and E3 a, f, where group-common streams take free slots, and there the paired differences at Q = 50 vary by
+  ±5–10 bit/s/Hz from run to run. With three drops the margin at R_th = 1–1.5 is therefore within the noise (§3.1);
+  at R_th ≥ 2 it is clear wherever groups are carried (§3.1, §3.2). A design that would also gain in the
+  small-S_max settings has to give group-common streams slots that the core private streams hold, and every such
+  rule I tried either loses at R_th = 0 (D4s, JTg1/JTg2) or needs a rate model of the AO outcome (§4).
 * **Low R_th at tight fronthaul in T2.** With S_max = N + 1 or 2N, the BSs carry different core private streams, which
   are interference-limited when every BS reaches every UE: at Q = 5, DQ − J = −12.4 (T2 b), −20.0 (T2 c), −7.1 (T2 d)
   at R_th = 0, and −10.9 (E3 e) at R_th = 0. From R_th ≈ 1.5 on, the same association is far better than joint
