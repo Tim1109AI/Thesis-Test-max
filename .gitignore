@@ -1,0 +1,4 @@
+discrete_design_v10/pristine/
+__pycache__/
+*.pyc
+*.pid
