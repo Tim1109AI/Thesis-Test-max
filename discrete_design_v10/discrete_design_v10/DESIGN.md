@@ -22,11 +22,35 @@ large area means the BSs around it. No parameter, no test, no optimization; abou
 |---|---|
 | R1, T2 (Q = 5, 144 runs) | DQ − DQ_1 = 0.00, −0.18 ± 0.33, **+0.71 ± 0.32, +2.04 ± 0.87, +1.31 ± 0.82, +2.49 ± 1.57** (R_th = 0 … 2.5) |
 | R1, E3 (Q = 5, 144 runs) | 0.00, +0.01 ± 0.01, −0.00 ± 0.41, +0.47 ± 0.78, +0.89 ± 0.93, +1.27 ± 0.78 |
-| R1 (Q = 50, confirm) | PENDING |
+| R1, T2 (Q = 50, confirm, 108 runs) | +0.21 ± 0.40, −1.28 ± 0.80, +0.30 ± 0.95, +0.54 ± 1.10, +1.58 ± 1.92, **+2.13 ± 1.09** |
+| R1, E3 (Q = 50, confirm, 108 runs) | +1.04 ± 0.58, +0.20 ± 0.25, +0.03 ± 0.32, +1.09 ± 0.83, **+3.67 ± 1.65**, +0.23 ± 0.94 |
+| R1, composition-study setting (Q = 50, 30 runs) | +0.18 ± 2.24, −1.90 ± 1.43, +2.35 ± 2.16, +2.03 ± 3.50, **+20.69 ± 1.33, +50.93 ± 12.40** |
 | R2 (Q = 50, bench) | DQ 76.3 / 86.1 / 86.1 (M = 100 / 300 / 500) vs sparse BF 63.1 / 75.1 / 81.0 (DQ − sparse BF = +9.8 ± 2.6 over the 15 runs) and stream clustering on DQ 44.5 / 57.2 / 62.5 (+28.1 ± 2.2); J 73.5 / 82.0 / 88.7 |
 | R3 (Q = 50, bench) | super-common 14.1 %, group-common 10.1 % of the sum rate (15/15 runs meet the QoS) |
 | R4 (Q = 50, smax) | rises with S_max and flattens: K = 8: 73.4 → 96.5 → 97.4 → 97.5 → 99.4 → 99.4 → 99.4; K = 12: 68.6 → 94.4 → 111.9 → 115.1 → 113.7 → 116.9 → 116.5; K = 16: 61.0 → 72.8 → 102.7 → 102.7 → 109.8 → 107.6 → 108.9 (S_max = 4 … 16); largest step down −2.2 ± 1.9 |
 | BS-specific streams | in 97/144 (T2) and 114/144 (E3) screen runs and in 9/15 benchmark runs; private streams in both scenarios, group-common streams in T2 (setting e) |
+
+**Verdict, requirement by requirement.**
+
+* **R1 — met in the mean, not clearly at R_th = 1–1.5.** At Q = 50 the mean of DQ − DQ_1 is ≥ 0 at every R_th ≥ 1
+  in both scenarios, but at R_th = 1–1.5 the margins are within one standard error; they are clear at R_th = 2 in E3,
+  at 2.5 in T2, and from R_th = 2 on in the thesis's composition-study setting (+20.7, +50.9). At R_th = 0.5 in T2
+  the mean is −1.28 ± 0.80 (a tie is allowed there). The reasons are structural (§3.1, §5): in 7 of the 12
+  scenario-settings of the grid the core private streams fill the fronthaul, and DQ and DQ_1 are the same design;
+  where they differ, the 1-layer counterpart spreads the private streams of the non-core users over the BSs and
+  carries a moderate QoS load almost as well as the group-common streams; and single paired runs at Q = 50 differ by
+  ±5–15 bit/s/Hz. CALIBRATION_SENTENCE
+* **R2 — met.** +9.8 ± 2.6 over sparse beamforming over the 15 benchmark runs (+13.2 / +11.1 / +5.1 at M = 100 /
+  300 / 500) and +28.1 ± 2.2 over stream clustering on DQ's streams; DQ is also 1.5 above the current framework J.
+* **R3 — met.** Super-common 14.1 % and group-common 10.1 % of the sum rate at K = 16, R_th = 2.
+* **R4 — met.** The rate rises with S_max and flattens; the steps along the plateau are within ±2.3 (stream sets
+  nested in S_max).
+* **Design requirement — met.** The BSs carry different private streams in most runs of both scenarios (core private
+  streams at small S_max, non-core private streams at large S_max and at the benchmark) and different group-common
+  streams in T2 e.
+* **Method.** One deterministic design for every setting, no AO test, no tuned parameter, nothing tied to B = 2, 3 or
+  to the BS positions; core users of their own for some BSs and shared ones for others, joint transmission when the
+  fronthaul admits every core user at every BS (§1.9).
 
 ## 1. The design
 
@@ -211,7 +235,8 @@ the consistent start for streams that some BSs do not carry, not for its measure
 * The design: SUS (as before), at most min(K, BN) ZF sum rates of size ≤ n, the gains and B sorts: 1.9 ms (T2) and
   2.2 ms (E3) per drop on average (`cpu_design`, max 5 ms).
 * The runs: the BSs of DQ carry different streams in most runs, so DQ serves more distinct streams than the current
-  design and the evaluations cost more: COST_LINE.
+  design and the evaluations cost more: 161 (T2) and 182 (E3) CPU-s per run at Q = 50 on average, 550–600 CPU-s in
+  setting f, where the BSs carry about 21 distinct streams (§3.7).
 
 ## 2. Why it works, and why it needs no tuning
 
@@ -248,8 +273,9 @@ the consistent start for streams that some BSs do not carry, not for its measure
   BS's first S_max entries are super-common and core private streams (S_max = N + 1 and 2N in the grid), both carry
   the same streams and tie exactly. Where a BS has room after its core private streams (S_max = 4N in both scenarios,
   and setting e in T2), the group-common streams take the slots that the 1-layer counterpart gives to the private
-  streams of the non-core users — the users ZF cannot separate, whose private streams carry little rate; a
-  group-common stream carries the QoS and common rate of its members instead.
+  streams of the non-core users — the users ZF cannot separate. A group-common stream carries the QoS of all its
+  members at once; once the QoS load is high this is worth far more than the private streams it replaces (R_th ≥ 2,
+  §3.1–3.2), at a moderate load the two are close (§5).
 * **R4 (S_max).** The core users, the groups and every BS's list do not depend on S_max; a larger S_max only appends
   streams to the carried prefix of each list. The stream set of every BS is nested in S_max.
 * **No empirical tuning.** Every quantity is a channel quantity (SUS residuals, correlations, gains, the ZF sum rate
@@ -266,7 +292,153 @@ on common runs; ± is the standard error of the paired mean.
 
 ### 3.1 R1 at Q = 50 (`--tier confirm`, both scenarios, `--by-setting`)
 
-CONFIRM_SECTION
+`python3 tools/report.py DQ --by-setting` (216 runs per variant, drops 901–903; JH and J1 at Q = 50: see §6):
+
+```
+===== scenario T2, Q = 50: 108 common runs (DQ: 108, DQ_1: 108)
+-- T2, all settings
+   R_th    n        DQ      DQ_1           DQ-DQ_1   QoS met DQ/DQ_1
+      0   18    117.65    117.44    +0.21± 0.40      18/18
+    0.5   18    114.73    116.01    -1.28± 0.80      18/18
+      1   18    109.96    109.66    +0.30± 0.95      18/18
+    1.5   18    102.79    102.26    +0.54± 1.10      18/18
+      2   18     94.05     92.47    +1.58± 1.92      18/18
+    2.5   18     77.86     75.73    +2.13± 1.09      15/15
+    all  108    102.84    102.26    +0.58± 0.47      105/105
+-- T2, setting a
+   R_th    n        DQ      DQ_1           DQ-DQ_1   QoS met DQ/DQ_1
+      0    3    105.77    105.98    -0.21± 0.61      3/3
+    0.5    3    102.38    103.81    -1.43± 2.21      3/3
+      1    3    102.12    102.27    -0.15± 3.91      3/3
+    1.5    3    100.98    104.20    -3.21± 2.73      3/3
+      2    3    105.15    103.07    +2.08± 3.81      3/3
+    2.5    3    107.02    106.79    +0.24± 3.78      3/3
+    all   18    103.91    104.35    -0.45± 1.13      18/18
+-- T2, setting b
+   R_th    n        DQ      DQ_1           DQ-DQ_1   QoS met DQ/DQ_1
+      0    3     75.96     75.96    +0.00± 0.00      3/3
+    0.5    3     74.74     74.74    +0.00± 0.00      3/3
+      1    3     68.44     68.44    +0.00± 0.00      3/3
+    1.5    3     64.59     64.59    +0.00± 0.00      3/3
+      2    3     65.13     65.13    +0.00± 0.00      3/3
+    2.5    3     54.29     54.29    +0.00± 0.00      3/3
+    all   18     67.19     67.19    +0.00± 0.00      18/18
+-- T2, setting c
+   R_th    n        DQ      DQ_1           DQ-DQ_1   QoS met DQ/DQ_1
+      0    3     82.47     82.47    +0.00± 0.00      3/3
+    0.5    3     88.96     88.96    +0.00± 0.00      3/3
+      1    3     82.27     82.27    +0.00± 0.00      3/3
+    1.5    3     74.82     74.82    +0.00± 0.00      3/3
+      2    3     55.57     55.57    +0.00± 0.00      3/3
+    2.5    3      0.00      0.00    +0.00± 0.00      0/0
+    all   18     64.01     64.01    +0.00± 0.00      15/15
+-- T2, setting d
+   R_th    n        DQ      DQ_1           DQ-DQ_1   QoS met DQ/DQ_1
+      0    3    122.61    122.61    +0.00± 0.00      3/3
+    0.5    3    112.05    112.05    +0.00± 0.00      3/3
+      1    3    110.72    110.72    +0.00± 0.00      3/3
+    1.5    3    106.25    106.25    +0.00± 0.00      3/3
+      2    3     95.56     95.56    +0.00± 0.00      3/3
+    2.5    3     83.77     83.77    +0.00± 0.00      3/3
+    all   18    105.16    105.16    +0.00± 0.00      18/18
+-- T2, setting e
+   R_th    n        DQ      DQ_1           DQ-DQ_1   QoS met DQ/DQ_1
+      0    3    161.18    161.68    -0.50± 1.82      3/3
+    0.5    3    156.15    160.29    -4.15± 3.99      3/3
+      1    3    153.44    149.27    +4.16± 2.87      3/3
+    1.5    3    137.06    131.81    +5.25± 3.97      3/3
+      2    3    115.70    112.23    +3.46±10.98      3/3
+    2.5    3    102.81     96.05    +6.76± 4.27      3/3
+    all   18    137.72    135.22    +2.50± 2.09      18/18
+-- T2, setting f
+   R_th    n        DQ      DQ_1           DQ-DQ_1   QoS met DQ/DQ_1
+      0    3    157.93    155.97    +1.96± 1.62      3/3
+    0.5    3    154.10    156.20    -2.10± 2.17      3/3
+      1    3    142.76    144.99    -2.23± 3.34      3/3
+    1.5    3    133.06    131.89    +1.17± 4.50      3/3
+      2    3    127.21    123.27    +3.94± 6.68      3/3
+    2.5    3    119.30    113.51    +5.79± 1.42      3/3
+    all   18    139.06    137.64    +1.42± 1.48      18/18
+-- DQ: mean served streams 10.56, group-common served 1.44, private served 8.12; BS-specific in 73/108 runs; per run, carried by a subset of the BSs: group-common 0.24, private 1.67
+-- CPU per run (s): DQ 160.9, DQ_1 68.1; DQ discrete design 0.002
+
+===== scenario E3, Q = 50: 108 common runs (DQ: 108, DQ_1: 108)
+-- E3, all settings
+   R_th    n        DQ      DQ_1           DQ-DQ_1   QoS met DQ/DQ_1
+      0   18    141.88    140.84    +1.04± 0.58      18/18
+    0.5   18    137.72    137.52    +0.20± 0.25      18/18
+      1   18    135.01    134.98    +0.03± 0.32      18/18
+    1.5   18    128.66    127.57    +1.09± 0.83      18/18
+      2   18    122.31    118.64    +3.67± 1.65      18/18
+    2.5   18    112.24    112.01    +0.23± 0.94      18/18
+    all  108    129.64    128.60    +1.04± 0.38      108/108
+-- E3, setting a
+   R_th    n        DQ      DQ_1           DQ-DQ_1   QoS met DQ/DQ_1
+      0    3    142.20    142.00    +0.20± 0.26      3/3
+    0.5    3    140.67    141.55    -0.88± 0.65      3/3
+      1    3    141.17    140.54    +0.62± 0.34      3/3
+    1.5    3    139.87    140.17    -0.30± 1.91      3/3
+      2    3    141.88    136.73    +5.15± 4.31      3/3
+    2.5    3    139.37    140.23    -0.86± 1.31      3/3
+    all   18    140.86    140.20    +0.66± 0.86      18/18
+-- E3, setting b
+   R_th    n        DQ      DQ_1           DQ-DQ_1   QoS met DQ/DQ_1
+      0    3     84.35     84.35    +0.00± 0.00      3/3
+    0.5    3     81.23     81.23    +0.00± 0.00      3/3
+      1    3     78.51     78.51    +0.00± 0.00      3/3
+    1.5    3     80.12     80.12    +0.00± 0.00      3/3
+      2    3     73.24     73.24    +0.00± 0.00      3/3
+    2.5    3     68.25     68.25    +0.00± 0.00      3/3
+    all   18     77.62     77.62    +0.00± 0.00      18/18
+-- E3, setting c
+   R_th    n        DQ      DQ_1           DQ-DQ_1   QoS met DQ/DQ_1
+      0    3    106.98    106.98    +0.00± 0.00      3/3
+    0.5    3    101.39    101.39    +0.00± 0.00      3/3
+      1    3     96.65     96.65    +0.00± 0.00      3/3
+    1.5    3     87.51     87.51    +0.00± 0.00      3/3
+      2    3     77.39     77.39    +0.00± 0.00      3/3
+    2.5    3     51.67     51.67    +0.00± 0.00      3/3
+    all   18     86.93     86.93    +0.00± 0.00      18/18
+-- E3, setting d
+   R_th    n        DQ      DQ_1           DQ-DQ_1   QoS met DQ/DQ_1
+      0    3    129.40    129.40    +0.00± 0.00      3/3
+    0.5    3    129.68    129.68    +0.00± 0.00      3/3
+      1    3    125.03    125.03    +0.00± 0.00      3/3
+    1.5    3    120.36    120.36    +0.00± 0.00      3/3
+      2    3    117.37    117.37    +0.00± 0.00      3/3
+    2.5    3    119.49    119.49    +0.00± 0.00      3/3
+    all   18    123.55    123.55    +0.00± 0.00      18/18
+-- E3, setting e
+   R_th    n        DQ      DQ_1           DQ-DQ_1   QoS met DQ/DQ_1
+      0    3    182.13    182.13    +0.00± 0.00      3/3
+    0.5    3    170.25    170.25    +0.00± 0.00      3/3
+      1    3    175.87    175.87    +0.00± 0.00      3/3
+    1.5    3    157.73    157.73    +0.00± 0.00      3/3
+      2    3    141.03    141.03    +0.00± 0.00      3/3
+    2.5    3    128.01    128.01    +0.00± 0.00      3/3
+    all   18    159.17    159.17    +0.00± 0.00      18/18
+-- E3, setting f
+   R_th    n        DQ      DQ_1           DQ-DQ_1   QoS met DQ/DQ_1
+      0    3    206.20    200.15    +6.05± 1.35      3/3
+    0.5    3    203.11    201.04    +2.07± 0.57      3/3
+      1    3    192.84    193.29    -0.45± 2.18      3/3
+    1.5    3    186.38    179.57    +6.81± 3.44      3/3
+      2    3    182.96    166.07   +16.89± 2.33      3/3
+    2.5    3    166.67    164.44    +2.23± 6.41      3/3
+    all   18    189.69    184.09    +5.60± 1.77      18/18
+-- DQ: mean served streams 11.50, group-common served 0.78, private served 9.72; BS-specific in 84/108 runs; per run, carried by a subset of the BSs: group-common 0.00, private 4.39
+-- CPU per run (s): DQ 181.7, DQ_1 133.0; DQ discrete design 0.002
+```
+
+**Reading.** At Q = 50 the mean of DQ − DQ_1 is positive at every R_th from 1 to 2.5 in both scenarios (T2: +0.30,
++0.54, +1.58, +2.13; E3: +0.03, +1.09, +3.67, +0.23), ties at R_th = 0 (+0.21, +1.04) and is −1.28 ± 0.80 (T2) and
++0.20 ± 0.25 (E3) at R_th = 0.5. Only E3 at R_th = 2 (+3.67 ± 1.65) and T2 at 2.5 (+2.13 ± 1.09) are about two
+standard errors from zero; **at R_th = 1–1.5 the margins are within one standard error, i.e. R1 is met in the
+mean but not with statistical clarity at Q = 50.** Where the two variants differ (T2 a, e, f and E3 a, f; every run of
+T2 b–d and E3 b–e is identical), single paired differences range from −11 to +17 bit/s/Hz, so three drops cannot
+resolve a margin of 1–3 bit/s/Hz diluted over six settings. By setting: E3 f +5.60 ± 1.77 and T2 e +2.50 ± 2.09
+(positive at R_th ≥ 1), T2 f +1.42 ± 1.48 (+5.8 ± 1.4 at R_th = 2.5), T2 a −0.45 ± 1.13 and E3 a +0.66 ± 0.86 (where
+every UE already has a private stream and the group-common streams are extra streams in free slots).
 
 ### 3.2 R1 in the composition-study setting (Q = 50, `tools/rsweep.py`)
 
@@ -402,11 +574,41 @@ T2 and 114 of 144 in E3; per run, on average 1.50 (T2) and 4.62 (E3) private str
 streams are carried by a subset of the BSs. Different private streams: T2 b, c, d, e, f, E3 b–f (core private streams
 in the settings with S_max = N + 1 and 2N, non-core private streams in e and f); different group-common streams: T2 e
 (each BS carries the group-common stream whose weakest member it reaches best, one slot each); in the benchmark
-setting: 9 of 15 runs (non-core private streams). CONFIRM_BS_LINE
+setting: 9 of 15 runs (non-core private streams). In the Q = 50 confirm runs: BS-specific in 73 of 108 runs (T2) and 84 of 108 (E3); per run 1.67 (T2) and 4.39 (E3) private streams and 0.24 (T2) group-common streams are carried by a subset of the BSs.
 
 ### 3.7 Cost
 
-COST_SECTION
+* **The discrete design:** 1.5–2.6 ms per drop (`cpu_design`; SUS, at most min(K, BN) ZF sum rates, B sorts).
+* **The runs (search R, Q = 50, and the refinement)**, CPU-s per run in the confirm tier (mean over drops and R_th) and
+  the mean number of distinct served streams:
+
+| scen | setting | DQ (CPU-s) | DQ_1 (CPU-s) | DQ streams | DQ_1 streams |
+|---|---|---|---|---|---|
+| T2 | a | 43 | 22 | 11.7 | 9.0 |
+| T2 | b | 32 | 32 | 6.3 | 6.3 |
+| T2 | c | 51 | 50 | 7.0 | 7.0 |
+| T2 | d | 37 | 37 | 6.7 | 6.7 |
+| T2 | e | 201 | 133 | 10.7 | 11.3 |
+| T2 | f | 601 | 136 | 21.0 | 17.0 |
+| T2 | all | 161 | 68 | 10.6 | 9.5 |
+| E3 | a | 53 | 40 | 9.7 | 9.0 |
+| E3 | b | 69 | 67 | 8.0 | 8.0 |
+| E3 | c | 117 | 113 | 9.0 | 9.0 |
+| E3 | d | 127 | 123 | 10.0 | 10.0 |
+| E3 | e | 177 | 171 | 11.7 | 11.7 |
+| E3 | f | 547 | 286 | 20.7 | 17.0 |
+| E3 | all | 182 | 133 | 11.5 | 10.8 |
+
+  Where the BSs carry the same streams or the HRS adds nothing, DQ costs what DQ_1 costs. In setting f the BSs carry
+  the core private streams, 3–5 group-common streams and different non-core private streams (about 21 distinct
+  streams, BS-specific), and a run costs 550–600 CPU-s, about twice the current design's (about 300 CPU-s, FINDINGS.md
+  §7) and 2–4 times its own 1-layer counterpart's. Over the grid: 161 (T2) and 182 (E3) CPU-s per run, against about
+  110 for the current design (README: 6.8 CPU-h for 216 runs).
+* **Benchmark setting** (15 runs): DQ 129 CPU-s per run (J 102, sparse beamforming 85); stream clustering on DQ's
+  streams 383 (on J's 328). S_max tier: 69 CPU-s per run. Q = 5 screen: 16.3 (T2) and 20.9 (E3) CPU-s per run (JH 6.3
+  and 9.1).
+* **This round in total:** about 25 CPU-hours for the runs of DQ, DQ_1 and DQ@SC, plus the screens of the other
+  methods (§4).
 
 ## 4. Other methods tried
 
@@ -449,13 +651,22 @@ What these runs established:
 
 ## 5. Weak points
 
-* **R1 has a narrow base in the grid.** The design ties its 1-layer counterpart exactly wherever the core private
-  streams fill the fronthaul: T2 b, c, d and E3 b, c, d, e (7 of the 12 scenario-settings). All of R1 comes from T2 a,
-  e, f and E3 a, f, where group-common streams take free slots, and there the paired differences at Q = 50 vary by
-  ±5–10 bit/s/Hz from run to run. With three drops the margin at R_th = 1–1.5 is therefore within the noise (§3.1);
-  at R_th ≥ 2 it is clear wherever groups are carried (§3.1, §3.2). A design that would also gain in the
-  small-S_max settings has to give group-common streams slots that the core private streams hold, and every such
-  rule I tried either loses at R_th = 0 (D4s, JTg1/JTg2) or needs a rate model of the AO outcome (§4).
+* **R1 is not clear at R_th = 1–1.5 (the main weak point).** Three causes. (i) The design ties its 1-layer
+  counterpart exactly wherever the core private streams fill the fronthaul: T2 b, c, d and E3 b, c, d, e (7 of the 12
+  scenario-settings); all of R1 comes from T2 a, e, f and E3 a, f. (ii) There, the 1-layer counterpart is a strong
+  competitor at a moderate QoS load: each BS gives the slots to the private streams of the non-core users it reaches
+  best, different ones at different BSs, so DQ_1 serves more UEs with private streams than a joint 1-layer design
+  (composition-study setting: up to 15 instead of 11), and these carry R_th = 1–1.5 almost as well as the
+  group-common streams; from R_th = 2 on they do not (+20.7 and +50.9 there). (iii) At Q = 50 single paired runs differ
+  by −11 … +17 bit/s/Hz, and three drops cannot resolve a margin of 1–3 diluted over six settings. A design that would
+  also gain in the small-S_max settings has to give group-common streams slots that the core private streams hold;
+  every such rule I tried either loses at R_th = 0 (D4s, JTg1/JTg2) or needs a rate model of the AO outcome (§4).
+  Dropping the private streams of the non-core users from the design would widen the gap by taking them from the
+  1-layer counterpart too (not run), but they carry 5–9 bit/s/Hz in settings a and f at Q = 50, so I did not weaken
+  the design to strengthen the comparison.
+* **R_th = 0.5 in T2.** −1.28 ± 0.80 at Q = 50 (−0.18 ± 0.33 at Q = 5; −1.90 ± 1.43 in the composition-study
+  setting): at a low QoS load the group-common streams are worth a little less than the private streams of the
+  non-core users whose slots they take.
 * **Low R_th at tight fronthaul in T2.** With S_max = N + 1 or 2N, the BSs carry different core private streams, which
   are interference-limited when every BS reaches every UE: at Q = 5, DQ − J = −12.4 (T2 b), −20.0 (T2 c), −7.1 (T2 d)
   at R_th = 0, and −10.9 (E3 e) at R_th = 0. From R_th ≈ 1.5 on, the same association is far better than joint
@@ -466,8 +677,9 @@ What these runs established:
   users: the AO starts with fewer ZF beams and DQ is 4.6 below J at Q = 5 (all eight private streams are still
   carried).
 * **Group-common streams on one BS.** When one slot is left per BS (T2 e), each BS carries the group-common stream
-  whose weakest member it reaches best, so each group-common stream is carried by one BS only; at R_th = 2.5 this
-  loses to the 1-layer counterpart's extra private stream at Q = 5 (−2.4 ± 4.7).
+  whose weakest member it reaches best, so each group-common stream is carried by one BS only (5 antennas). At Q = 5
+  this lost at R_th = 2.5 (−2.4 ± 4.7); at Q = 50 T2 e is one of the settings with gains (+2.5 ± 2.1 over R_th,
+  +6.8 ± 4.3 at R_th = 2.5).
 * **Large fronthaul in a large network.** The class order comes first: when S_max − 1 ≥ |C|, every BS carries every
   core private stream, also the far ones, before any group-common stream. With S_max per BS and |C| growing with
   the area this does not happen in a large network (9 BSs on 600 m: only at S_max = 28, §1.9), but a mid-size network
@@ -490,8 +702,8 @@ What these runs established:
   so the floor is conservative.
 * **Per-BS ranking by the direct-channel gain** (the weakest member's gain for a group-common stream): the simplest
   local quantity; no association threshold.
-* **Ties** in any sort are broken by the UE or group index (Python's stable sort over the SUS order / index order),
-  so the design is deterministic.
+* **Ties** in a BS's sort (equal gains, which do not occur with continuous positions) keep the SUS order for core users
+  and groups and the UE index for the other UEs (stable sorts), so the design is deterministic.
 * **Variant names.** `DQ`, `DQ_1` are the prototype names under which the screen ran; after the screen the design was
   moved to `code/bsdesign.py` and the entries now point there. `tools/verify_bsdesign.py` checks that both give the
   same designs on all 858 configurations of the screen, confirm, bench and smax tiers (they do), so the earlier runs
@@ -512,9 +724,12 @@ What these runs established:
 * `code/bsd.py` — every prototype of §4 (D1s … DQ), kept for reproducibility.
 * `harness/variants.py` — `DQ`, `DQ_1` (the design) and the entries of the prototypes.
 * `tools/verify_bsdesign.py`, `tools/design_structure.py`, `tools/large_area.py` — the checks and tables of §1.8,
-  §1.9 and §6.
+  §1.9 and §6; `tools/rsweep.py` — the runs and the report of §3.2 (`results/*__T2__rsweep.jsonl`,
+  `results/DQ__report_rsweep.json`).
 * `results/*.jsonl` — every run (harness format, unedited): the design (`DQ`, `DQ_1`, `DQ@SC`), the references
-  (`JH`, `J1`), and the prototypes; `results/*report*.json` — the reports of `tools/report.py --json`.
+  (`JH`, `J1`), and the prototypes; `results/*report*.json` — the reports of `tools/report.py --json` (`DQ__report.json`:
+  confirm, `DQ__report_Q5.json`: screen, `DQ__report_bench.json`, `DQ__report_smax.json`, `DQ__report_rsweep.json`;
+  `D1s`, `D2s`, `DRs`: the screens of §4).
 * `design_return_cloud_max.diff` — unified diff (`diff -ruN`) against the package as delivered.
 * `logs/` — the logs of the background jobs.
 

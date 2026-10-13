@@ -1,0 +1,13 @@
+JH__T2: 108 runs to do (0 done) -> /home/user/Thesis-Test-max/discrete_design_v10/discrete_design_v10/results/JH__T2.jsonl
+JH__E3: 108 runs to do (0 done) -> /home/user/Thesis-Test-max/discrete_design_v10/discrete_design_v10/results/JH__E3.jsonl
+  [1/216] T2 a drop 901 R_th 0.5: rate 93.92, 11 streams  (30 CPU-s, 32 s elapsed)
+  [2/216] T2 a drop 901 R_th 0: rate 93.92, 11 streams  (30 CPU-s, 32 s elapsed)
+  [3/216] T2 a drop 901 R_th 1: rate 93.92, 11 streams  (29 CPU-s, 61 s elapsed)
+  [4/216] T2 a drop 901 R_th 1.5: rate 93.92, 11 streams  (29 CPU-s, 62 s elapsed)
+  [5/216] T2 a drop 901 R_th 2: rate 99.34, 11 streams  (29 CPU-s, 90 s elapsed)
+  [6/216] T2 a drop 901 R_th 2.5: rate 101.07, 11 streams  (34 CPU-s, 97 s elapsed)
+  [7/216] T2 b drop 901 R_th 0: rate 84.14, 4 streams  (10 CPU-s, 101 s elapsed)
+  [8/216] T2 b drop 901 R_th 0.5: rate 77.61, 4 streams  (10 CPU-s, 107 s elapsed)
+  [9/216] T2 b drop 901 R_th 1: rate 68.09, 4 streams  (12 CPU-s, 114 s elapsed)
+  [10/216] T2 b drop 901 R_th 1.5: rate 59.73, 4 streams  (14 CPU-s, 122 s elapsed)
+  [11/216] T2 b drop 901 R_th 2: rate 50.78, 4 streams  (15 CPU-s, 129 s elapsed)
