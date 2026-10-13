@@ -277,10 +277,27 @@ every R_th, Q = 50 (`python3 tools/rsweep.py DQ`, `DQ_1`; runs through `harness/
 `results/DQ*__T2__rsweep.jsonl`):
 
 ```
-RSWEEP_REPORT
+===== R1 in the composition-study setting (T2, K = 16, N = 3, M = 500, S_max = 12, drops 801-805, Q = 50): 30 common runs
+ R_th   n        DQ      DQ_1           DQ-DQ_1                                  per drop   QoS met
+    0   5    125.19    125.01    +0.18± 2.24                   -6.2 -1.0 +2.1 -1.3 +7.4   5/5
+  0.5   5    123.16    125.06    -1.90± 1.43                   -3.5 -0.6 -1.5 +2.3 -6.2   5/5
+    1   5    116.89    114.54    +2.35± 2.16                   +9.5 +1.4 -4.0 +3.1 +1.6   5/5
+  1.5   5     97.21     95.17    +2.03± 3.50                   +8.9 +8.4 -5.4 -7.4 +5.7   5/5
+    2   5     86.08     65.40   +20.69± 1.33              +21.4 +24.8 +16.7 +21.1 +19.4   5/5
+  2.5   5     75.86     24.93   +50.93±12.40              +30.9 +85.9 +33.3 +28.4 +76.1   5/3
+  all  30    104.06     91.69   +12.38± 4.04                                              30/28
 ```
 
-RSWEEP_TEXT
+In this setting every BS carries the super-common stream, the six core private streams (the current design's), the
+group-common streams and at most one other private stream, while the 1-layer counterpart gives those slots to the
+private streams of the non-core users, different ones at the two BSs (up to 15 distinct private streams). From
+R_th = 2 on the hierarchy wins by a wide margin (+20.7 ± 1.3 and +50.9 ± 12.4; the 1-layer counterpart misses the
+QoS in two of the five drops at R_th = 2.5). At R_th = 0 the two tie (+0.2 ± 2.2); at R_th = 0.5–1.5 the mean
+difference is within the run-to-run noise of Q = 50 (single paired differences from −7.4 to +9.5). Two reasons: the
+noise, and the 1-layer counterpart itself: because each BS carries its own non-core private streams, DQ_1 serves up
+to 15 UEs with private streams (J1 serves 11, all jointly), which carries a moderate QoS load nearly as well as the
+group-common streams. For comparison, the current design over 48 drops (search T): J − J1 = +3.2 ± 0.6 at R_th = 1
+and +10.1 ± 0.9 at 1.5.
 
 ### 3.3 R1 at Q = 5 (`--tier screen`, 288 runs per variant)
 
