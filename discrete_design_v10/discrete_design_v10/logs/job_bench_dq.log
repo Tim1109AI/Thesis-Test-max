@@ -22,3 +22,13 @@ DQ@SC__T2__bench: 15 runs to do (0 done) -> /home/user/Thesis-Test-max/discrete_
   [4/15] T2 bench_M100 drop 804 R_th 2: rate 42.78, 19 streams BS-specific  (417 CPU-s, 943 s elapsed)
   [5/15] T2 bench_M300 drop 801 R_th 2: rate 50.60, 19 streams BS-specific  (347 CPU-s, 1470 s elapsed)
   [6/15] T2 bench_M100 drop 805 R_th 2: rate 39.35, 20 streams BS-specific  (565 CPU-s, 1540 s elapsed)
+  [7/15] T2 bench_M300 drop 802 R_th 2: rate 70.57, 17 streams BS-specific  (219 CPU-s, 1805 s elapsed)
+  [8/15] T2 bench_M300 drop 803 R_th 2: rate 48.23, 20 streams BS-specific  (394 CPU-s, 2138 s elapsed)
+  [9/15] T2 bench_M300 drop 804 R_th 2: rate 56.79, 19 streams BS-specific  (429 CPU-s, 2465 s elapsed)
+  [10/15] T2 bench_M300 drop 805 R_th 2: rate 59.96, 20 streams BS-specific  (458 CPU-s, 2838 s elapsed)
+  [11/15] T2 bench_M500 drop 801 R_th 2: rate 66.48, 19 streams BS-specific  (386 CPU-s, 3055 s elapsed)
+  [12/15] T2 bench_M500 drop 802 R_th 2: rate 78.66, 17 streams BS-specific  (254 CPU-s, 3230 s elapsed)
+  [13/15] T2 bench_M500 drop 803 R_th 2: rate 46.13, 20 streams BS-specific  (350 CPU-s, 3586 s elapsed)
+  [14/15] T2 bench_M500 drop 804 R_th 2: rate 61.28, 19 streams BS-specific  (396 CPU-s, 3828 s elapsed)
+  [15/15] T2 bench_M500 drop 805 R_th 2: rate 59.70, 20 streams BS-specific  (443 CPU-s, 4116 s elapsed)
+DONE

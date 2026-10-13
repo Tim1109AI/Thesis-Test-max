@@ -23,7 +23,7 @@ large area means the BSs around it. No parameter, no test, no optimization; abou
 | R1, T2 (Q = 5, 144 runs) | DQ − DQ_1 = 0.00, −0.18 ± 0.33, **+0.71 ± 0.32, +2.04 ± 0.87, +1.31 ± 0.82, +2.49 ± 1.57** (R_th = 0 … 2.5) |
 | R1, E3 (Q = 5, 144 runs) | 0.00, +0.01 ± 0.01, −0.00 ± 0.41, +0.47 ± 0.78, +0.89 ± 0.93, +1.27 ± 0.78 |
 | R1 (Q = 50, confirm) | PENDING |
-| R2 (Q = 50, bench) | DQ 76.3 / 86.1 / 86.1 (M = 100/300/500) vs sparse BF 63.1 / 75.1 / 81.0; stream clustering on DQ: PENDING |
+| R2 (Q = 50, bench) | DQ 76.3 / 86.1 / 86.1 (M = 100 / 300 / 500) vs sparse BF 63.1 / 75.1 / 81.0 (DQ − sparse BF = +9.8 ± 2.6 over the 15 runs) and stream clustering on DQ 44.5 / 57.2 / 62.5 (+28.1 ± 2.2); J 73.5 / 82.0 / 88.7 |
 | R3 (Q = 50, bench) | super-common 14.1 %, group-common 10.1 % of the sum rate (15/15 runs meet the QoS) |
 | R4 (Q = 50, smax) | PENDING |
 | BS-specific streams | in 97/144 (T2) and 114/144 (E3) screen runs and in 9/15 benchmark runs; private streams in both scenarios, group-common streams in T2 (setting e) |
@@ -268,7 +268,21 @@ on common runs; ± is the standard error of the paired mean.
 
 CONFIRM_SECTION
 
-### 3.2 R1 at Q = 5 (`--tier screen`, 288 runs per variant)
+### 3.2 R1 in the composition-study setting (Q = 50, `tools/rsweep.py`)
+
+The grid has room for group-common streams after the core private streams only at S_max = 4N (and in T2 e). The
+thesis's own composition study (FINDINGS.md §3: K = 16, N = 3, M = 500, S_max = 12, where J − J1 = −0.2, −0.3, +3.2,
++10.1, +21.5, +68.2 at R_th = 0 … 2.5 over 48 drops) is such a setting. DQ and DQ_1 on it, the five benchmark drops,
+every R_th, Q = 50 (`python3 tools/rsweep.py DQ`, `DQ_1`; runs through `harness/grid.py`'s `run()`, records in
+`results/DQ*__T2__rsweep.jsonl`):
+
+```
+RSWEEP_REPORT
+```
+
+RSWEEP_TEXT
+
+### 3.3 R1 at Q = 5 (`--tier screen`, 288 runs per variant)
 
 ```
 ===== scenario T2, Q = 5: 144 common runs (DQ: 144, DQ_1: 144, JH: 144, J1: 144)
@@ -306,24 +320,36 @@ R_th = 1 comes from one drop of E3 f (drop 904: −8.4 at R_th = 1, −11.7 at 1
 unusually good deployment: its rate at R_th = 1.5 exceeds its rate at R_th = 0); the three other E3 f drops give +2.6,
 +3.0 and +2.2 at R_th = 1.
 
-### 3.3 R2 and R3 (`--tier bench`, Q = 50; `DQ@SC --tier bench`)
+### 3.4 R2 and R3 (`--tier bench`, Q = 50; `DQ@SC --tier bench`)
 
 ```
-BENCH_REPORT
+===== benchmark setting (T2, K = 16, N = 3, S_max = 12, R_th = 2, Q = 50): 15 common runs (DQ: 15, sparse_bf: 15, DQ@SC: 15, J: 15, J@SC: 15)
+sparse_bf, J (the current framework) and J@SC (stream clustering on its streams): stored runs of Fig. 5.10
+-- by M
+      M    n        DQ sparse_bf     DQ@SC         J      J@SC      DQ-sparse_bf          DQ-DQ@SC   QoS met DQ/sparse_bf/DQ@SC/J/J@SC
+    100    5     76.31     63.08     44.47     73.51     44.18   +13.23± 3.47      +31.84± 3.32      5/5/5/5/5
+    300    5     86.14     75.09     57.23     81.95     54.38   +11.05± 4.02      +28.91± 3.61      5/5/5/5/5
+    500    5     86.08     81.03     62.45     88.72     64.51    +5.05± 5.73      +23.63± 4.13      5/5/5/5/5
+    all   15     82.84     73.07     54.72     81.39     54.36    +9.78± 2.58      +28.13± 2.18      15/15/15/15/15
+-- DQ: mean served streams 12.60, group-common served 4.40, private served 7.20; BS-specific in 9/15 runs; per run, carried by a subset of the BSs: group-common 0.00, private 1.20
+-- DQ: shares of the sum rate over its 15 runs meeting the QoS: super-common 14.1%, group-common 10.1%, private 75.9%
 ```
 
 Per drop (M = 100 / 300 / 500), DQ: 78.3 81.3 68.5 72.5 81.0 / 89.0 88.1 77.5 82.0 94.1 / 82.5 90.6 78.9 87.6 90.8
 (drops 801–805). In drops 803 and 804 the two BSs carry the same streams and DQ's runs equal J's exactly; in drops
 801, 802 and 805 the BSs carry different non-core private streams. Means: DQ 76.3 / 86.1 / 86.1, J 73.5 / 82.0 / 88.7,
-sparse beamforming 63.1 / 75.1 / 81.0 (DQ − sparse BF = +13.2 / +11.1 / +5.1).
+sparse beamforming 63.1 / 75.1 / 81.0 (DQ − sparse BF = +13.2 / +11.1 / +5.1; at M = 500 the paired margin is
++5.1 ± 5.7 because sparse beamforming reaches 97.4 in drop 801), stream clustering on DQ's streams 44.5 / 57.2 / 62.5
+(19 streams on average; on J's streams 44.2 / 54.4 / 64.5). DQ is 1.5 above J over the 15 runs (82.8 vs 81.4): above
+at M = 100 and 300, below at M = 500.
 
-### 3.4 R4 (`--tier smax`, Q = 50)
+### 3.5 R4 (`--tier smax`, Q = 50)
 
 ```
 SMAX_REPORT
 ```
 
-### 3.5 Where the BSs carry different streams
+### 3.6 Where the BSs carry different streams
 
 From the report lines "BS-specific in …": in the Q = 5 screen, DQ's BSs carry different streams in 97 of 144 runs in
 T2 and 114 of 144 in E3; per run, on average 1.50 (T2) and 4.62 (E3) private streams and 0.26 (T2) group-common
@@ -332,7 +358,7 @@ in the settings with S_max = N + 1 and 2N, non-core private streams in e and f);
 (each BS carries the group-common stream whose weakest member it reaches best, one slot each); in the benchmark
 setting: 9 of 15 runs (non-core private streams). CONFIRM_BS_LINE
 
-### 3.6 Cost
+### 3.7 Cost
 
 COST_SECTION
 
@@ -380,7 +406,7 @@ What these runs established:
 * **R1 has a narrow base in the grid.** The design ties its 1-layer counterpart exactly wherever the core private
   streams fill the fronthaul: T2 b, c, d and E3 b, c, d, e (7 of the 12 scenario-settings). All of R1 comes from T2 a,
   e, f and E3 a, f, where group-common streams take free slots. In E3 the margin at R_th = 1 is small (one drop
-  of E3 f decides the Q = 5 screen, §3.2); see §3.1 for Q = 50. A design that would also gain in the small-S_max
+  of E3 f decides the Q = 5 screen, §3.3); see §3.1 for Q = 50 and §3.2 for the composition-study setting. A design that would also gain in the small-S_max
   settings has to give group-common streams slots that the core private streams hold, and every such rule I tried
   either loses at R_th = 0 (D4s, JTg1/JTg2) or needs a rate model of the AO outcome (§4).
 * **Low R_th at tight fronthaul in T2.** With S_max = N + 1 or 2N, the BSs carry different core private streams, which
@@ -402,7 +428,7 @@ What these runs established:
 * **The QoS floor is only a necessary condition** (C_0 is an upper bound on the super-common rate). It does not
   guarantee feasibility; in the Q = 5 screen DQ misses the QoS in 8 of 144 T2 runs (T2 b at 2.5, T2 c at 2–2.5) and 2 of
   144 E3 runs (E3 c at 2.5), J in 12 of 144 in each scenario.
-* **Cost.** The BSs carry more distinct streams, so the AO costs more per evaluation (§3.6).
+* **Cost.** The BSs carry more distinct streams, so the AO costs more per evaluation (§3.7).
 * **The AO start switch.** BS-specific stream sets use a start computed on the carrying antennas (§1.10). It is a
   change of the evaluator's start, off by default, applied to every run of DQ, DQ_1 and DQ@SC; its measured effect is
   small.
@@ -425,7 +451,9 @@ What these runs established:
   (screen, Q = 5 bench check, Q = 50 bench of DQ and DQ@SC, which started before the switch) are runs of the same
   design. In configurations outside the tiers, `bsdesign.py` adds two guards that the prototype lacks (no group of
   all K UEs when only one core user is kept; linearly dependent channels end the ZF rule).
-* **JH and J1 at Q = 50**: JHJ1_CHOICE
+* **JH and J1 were not run at Q = 50.** The README makes them optional; the confirm and smax tiers of DQ took the
+  compute (DQ's runs of setting f cost 650–900 CPU-s each at Q = 50). The reference to J is the Q = 5 screen (JH, J1
+  on all 288 runs) and the stored benchmark runs (Q = 50).
 * **The 1-layer counterpart** is a variant of its own (`DQ_1`, `one_layer` of `DQ`): the same lists without
   group-common streams.
 
